@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Heart</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: #24262d;
+        color: white;
+      }
+      main {
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .heart {
+        --heart-color: #9f3232;
+        --heart-size: 80px;
+        position: relative;
+        display: inline-block;
+        width: var(--heart-size);
+        height: var(--heart-size);
+        background-color: var(--heart-color);
+        transform: rotate(45deg);
+      }
+      .heart::after,
+      .heart::before {
+        content: "";
+        position: absolute;
+        width: var(--heart-size);
+        height: var(--heart-size);
+        background-color: var(--heart-color);
+        border-radius: 50%;
+      }
+      .heart::before {
+        transform: translateX(-50%);
+      }
+      .heart::after {
+        transform: translateY(-50%);
+      }
+    </style>
+  </head>
+  <body>
+    <main><div class="heart"></div></main>
+  </body>
+</html>
