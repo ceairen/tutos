@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Skeleton</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: #24262d;
+        color: white;
+      }
+      main {
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .skeleton {
+        --sk-size: 300px;
+        width: var(--sk-size);
+        height: var(--sk-size);
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+      }
+      .skeleton > li {
+        width: calc(var(--sk-size) / 8);
+        height: calc(var(--sk-size) / 8);
+        display: inline-block;
+        background-color: #eee;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div class="skeleton"></div>
+    </main>
+    <script>
+      const matrixSkeleton = [
+        "#A1A1A1",
+        "#9B9B9B",
+        "#A3A3A3",
+        "#919191",
+        "#888888",
+        "#8F8F8F",
+        "#9B9B9B",
+        "#989898",
+        "#9B9B9B",
+        "#9B9B9B",
+        "#9B9B9B",
+        "#AAAAAA",
+        "#C1C1C1",
+        "#BEBEBE",
+        "#9B9B9B",
+        "#919191",
+        "#9B9B9B",
+        "#C7C7C7",
+        "#CACACA",
+        "#D8D8D8",
+        "#CFCFCF",
+        "#CFCFCF",
+        "#BABABA",
+        "#AAAAAA",
+        "#BABABA",
+        "#C4C4C4",
+        "#BABABA",
+        "#C1C1C1",
+        "#AFAFAF",
+        "#CACACA",
+        "#AAAAAA",
+        "#AAAAAA",
+        "#C4C4C4",
+        "#494949",
+        "#494949",
+        "#C4C4C4",
+        "#CACACA",
+        "#494949",
+        "#494949",
+        "#BABABA",
+        "#A7A7A7",
+        "#C1C1C1",
+        "#CACACA",
+        "#828282",
+        "#828282",
+        "#CACACA",
+        "#AAAAAA",
+        "#8F8F8F",
+        "#9E9E9E",
+        "#494949",
+        "#494949",
+        "#494949",
+        "#494949",
+        "#494949",
+        "#494949",
+        "#919191",
+        "#828282",
+        "#7F7F7F",
+        "#858585",
+        "#858585",
+        "#919191",
+        "#858585",
+        "#949494",
+        "#888888",
+      ];
+
+      function loadPixels() {
+        Array(64)
+          .fill(0)
+          .map(() => {
+            document
+              .querySelector(".skeleton")
+              .appendChild(document.createElement("li"));
+          });
+      }
+
+      function loadSkeleton() {
+        Array.from(document.querySelectorAll(".skeleton > li")).map(
+          (li, index) => {
+            li.style.backgroundColor = matrixSkeleton[index];
+          }
+        );
+      }
+
+      loadPixels();
+      loadSkeleton();
+    </script>
+  </body>
+</html>

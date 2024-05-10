@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pokeball</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: #484a54;
+        color: white;
+      }
+      main {
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .pokeball {
+        --pokeball-size: 300px;
+        --pokeball-red-color: #e7554e;
+        --pokeball-white-color: #f0ede6;
+        --pokeball-black-color: #222;
+        --pokeball-center-size: 80px;
+        position: relative;
+        width: var(--pokeball-size);
+        height: var(--pokeball-size);
+        background-color: var(--pokeball-black-color);
+        border-radius: 50%;
+      }
+      .pokeball::before,
+      .pokeball::after {
+        content: "";
+        position: absolute;
+        width: var(--pokeball-size);
+        height: calc(var(--pokeball-size) / 2);
+      }
+      .pokeball::before {
+        border-top-left-radius: var(--pokeball-size);
+        border-top-right-radius: var(--pokeball-size);
+        background-color: var(--pokeball-red-color);
+        transform: translateY(-10px) scale(1.05);
+      }
+      .pokeball::after {
+        top: 50%;
+        border-bottom-left-radius: var(--pokeball-size);
+        border-bottom-right-radius: var(--pokeball-size);
+        background-color: var(--pokeball-white-color);
+        transform: translateY(10px) scale(1.05);
+      }
+      .pokeball > span {
+        position: absolute;
+        width: var(--pokeball-center-size);
+        height: var(--pokeball-center-size);
+        background-color: var(--pokeball-white-color);
+        top: calc(50% - var(--pokeball-center-size) / 2);
+        left: calc(50% - var(--pokeball-center-size) / 2);
+        border: 10px solid var(--pokeball-black-color);
+        border-radius: 50%;
+        z-index: 999;
+      }
+
+      .pokeball > span::after {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-color: var(--pokeball-white-color);
+        border-radius: 50%;
+        transform: scale(0.5);
+        box-shadow: 10px 10px 20px #bebebe, -10px -10px 20px #ffffff;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div class="pokeball"><span></span></div>
+    </main>
+  </body>
+</html>
