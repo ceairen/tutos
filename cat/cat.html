@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cat</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: #24262d;
+        color: white;
+      }
+      main {
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: end;
+      }
+      .cat {
+        --cat-width: 300px;
+        --cat-height: calc(var(--cat-width) * 1.5);
+        --cat-color: #efefef;
+        --cat-rose: #f1c8c7;
+        width: var(--cat-width);
+        height: var(--cat-height);
+        background-color: var(--cat-color);
+        display: flex;
+        flex-direction: column;
+        border-top-right-radius: calc(var(--cat-width) / 2);
+        border-top-left-radius: calc(var(--cat-width) / 2);
+      }
+      .cat-top,
+      .cat-face {
+        width: 100%;
+        height: 100px;
+      }
+      .cat-face {
+        transform: translateY(-30px);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .cat-face > div {
+        --face-base-size: 50px;
+        width: var(--face-base-size);
+        height: var(--face-base-size);
+      }
+      .cat-face > div > span {
+        display: block;
+        position: relative;
+      }
+      .eyes > span {
+        width: 100%;
+        height: 100%;
+        background-color: #222;
+        border-radius: 50%;
+      }
+      .eyes > span::after {
+        --span-size: calc(var(--face-base-size) / 5);
+        --span-margin: 10px;
+        content: "";
+        position: absolute;
+        top: var(--span-margin);
+        right: var(--span-margin);
+        width: var(--span-size);
+        height: var(--span-size);
+        background-color: #efefef;
+        border-radius: 50%;
+      }
+      .cheeks {
+        display: flex;
+        justify-content: end;
+        align-items: end;
+        transform: translateY(15px);
+      }
+      .cheek-right {
+        justify-content: start;
+      }
+      .cheeks > span {
+        --span-size: calc(var(--face-base-size) / 2);
+        width: var(--span-size);
+        height: var(--span-size);
+        background-color: var(--cat-rose);
+        border-radius: 50%;
+      }
+      .cheeks > span::before {
+        content: "";
+        position: absolute;
+        width: var(--span-size);
+        height: var(--span-size);
+        border-top: 1px solid #222;
+      }
+      .cheek-right > span::before {
+        border-left: 1px solid #222;
+        transform: translateX(100%) rotate(-45deg);
+      }
+      .cheek-left > span::before {
+        border-right: 1px solid #222;
+        transform: translateX(-100%) rotate(45deg);
+      }
+      .mouth {
+        transform: translateY(20px) scale(0.7);
+      }
+      .mouth > b {
+        --b-size: var(--face-base-size);
+        position: absolute;
+        width: 0;
+        height: 0;
+        border-left: calc(var(--b-size) / 2) solid transparent;
+        border-right: calc(var(--b-size) / 2) solid transparent;
+        border-top: calc(var(--b-size) / 3) solid #222;
+      }
+      .mouth > span {
+        position: absolute;
+        width: 2px;
+        height: 20px;
+        background-color: #222;
+        left: calc(50% - 1px);
+        top: 10px;
+      }
+      .mouth > span::after {
+        --span-size: 20px;
+        content: "";
+        position: absolute;
+        width: var(--span-size);
+        height: var(--span-size);
+        top: 22px;
+        left: -10px;
+        border-left: 2px solid #222;
+        border-top: 2px solid #222;
+        transform: rotate(45deg);
+      }
+      .ear {
+        position: absolute;
+        width: 0px;
+        height: 0px;
+        left: calc(50% - 85px);
+        border-style: solid;
+        border-width: 0 85px 209px 85px;
+        border-color: transparent transparent white transparent;
+        transform: rotate(0deg);
+        z-index: -1;
+      }
+      .ear::before {
+        content: "";
+        position: absolute;
+        width: 0px;
+        height: 0px;
+        left: calc(50% - 85px);
+        border-style: solid;
+        border-width: 0 85px 209px 85px;
+        border-color: transparent transparent var(--cat-rose) transparent;
+        transform: rotate(0deg);
+        z-index: 999;
+        transform-origin: bottom;
+        transform: scale(0.6);
+      }
+      .ear-left {
+        transform: translateX(-100px) translateY(-100px) rotate(-30deg)
+          scale(0.5);
+      }
+      .ear-right {
+        transform: translateX(100px) translateY(-100px) rotate(30deg) scale(0.5);
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div class="cat">
+        <div class="cat-top">
+          <div class="ear ear-left"></div>
+          <div class="ear ear-right"></div>
+        </div>
+        <div class="cat-face">
+          <div class="cheeks cheek-left"><span></span></div>
+          <div class="eyes eye-left"><span></span></div>
+          <div class="mouth"><b></b><span></span></div>
+          <div class="eyes eye-right"><span></span></div>
+          <div class="cheeks cheek-right"><span></span></div>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PQ</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: #24262d;
+        color: white;
+      }
+      main {
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .roll {
+        --roll-w: 230px;
+        --roll-h: 150px;
+        --roll-color: #eebbc0;
+        --roll-color-pale: #f0cacd;
+        --roll-radius: 75px;
+        --roll-b-a-width: calc(var(--roll-w) / 2);
+        width: var(--roll-w);
+        height: var(--roll-h);
+        display: block;
+        background-color: var(--roll-color);
+        position: relative;
+        border-top-right-radius: var(--roll-radius);
+        border-bottom-right-radius: var(--roll-radius);
+      }
+      .roll::after,
+      .roll::before {
+        content: "";
+        position: absolute;
+        background-color: var(--roll-color-pale);
+        height: var(--roll-h);
+        width: var(--roll-b-a-width);
+        border-radius: 50%;
+        left: calc(0% - var(--roll-b-a-width) / 2);
+      }
+      .roll::after {
+        background-color: antiquewhite;
+        transform: scale(0.6);
+      }
+      .roll-sheet {
+        position: absolute;
+        z-index: 99;
+        top: 50%;
+        left: calc(var(--roll-b-a-width) / 2);
+        right: 0;
+        height: 150px;
+        background-color: var(--roll-color);
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div class="roll">
+        <div class="roll-sheet"></div>
+      </div>
+    </main>
+  </body>
+</html>
