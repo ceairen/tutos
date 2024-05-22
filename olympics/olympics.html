@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Olympic</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: #24262d;
+        color: white;
+      }
+      main {
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .circles {
+        --black-color: #000;
+        --blue-color: #0184c8;
+        --red-color: #e9354e;
+        --yellow-color: #fcb22c;
+        --green-color: #00a752;
+        --circle-size: 120px;
+        --margin-circle: 5px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        display: flex;
+        flex-wrap: wrap;
+        max-width: calc(
+          var(--circle-size) * 3 + calc(var(--margin-circle) * 2 * 3)
+        );
+        justify-content: center;
+      }
+      .circles > li {
+        width: var(--circle-size);
+        height: var(--circle-size);
+        border-width: 8px;
+        border-style: solid;
+        border-radius: 50%;
+        margin: 0 var(--margin-circle);
+        position: relative;
+      }
+      .circles > li::after {
+        content: "";
+        position: absolute;
+        left: -8px;
+        top: -8px;
+        width: 100%;
+        height: 100%;
+        border-width: 8px;
+        border-style: solid;
+        border-radius: 50%;
+        border-color: transparent;
+        z-index: 999;
+      }
+      .circles > li:nth-child(1) {
+        border-color: var(--blue-color);
+      }
+      .circles > li:nth-child(1)::after {
+        border-right-color: var(--blue-color);
+      }
+      .circles > li:nth-child(2) {
+        border-color: var(--black-color);
+      }
+      .circles > li:nth-child(2)::after {
+        border-bottom-color: var(--black-color);
+        border-top-color: var(--black-color);
+        transform: rotate(-65deg);
+        z-index: 1001;
+      }
+      .circles > li:nth-child(3) {
+        border-color: var(--red-color);
+        position: relative;
+      }
+      .circles > li:nth-child(3)::after {
+        border-bottom-color: var(--red-color);
+      }
+      .circles > li:nth-child(4) {
+        border-color: var(--yellow-color);
+      }
+      .circles > li:nth-child(4)::after {
+        border-right-color: var(--yellow-color);
+        transform: rotate(-50deg);
+        z-index: 1006;
+      }
+      .circles > li:nth-child(5) {
+        border-color: var(--green-color);
+      }
+      .circles > li:nth-child(5)::after {
+        border-left-color: var(--green-color);
+        z-index: 1029999;
+      }
+      .circles > li:nth-child(4),
+      .circles > li:nth-child(5) {
+        transform: translateY(calc(-50% - var(--margin-circle)));
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <ul class="circles">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+      </ul>
+    </main>
+  </body>
+</html>

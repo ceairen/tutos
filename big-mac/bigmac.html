@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BigMac</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: #24262d;
+        color: white;
+      }
+      main {
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .burger {
+        --bread-color: #e19b2e;
+        --salad-color: #8cb73d;
+        --steak-color: #995e11;
+        --tomato-color: #e54727;
+        --cheese-color: #f4de3b;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+      }
+      .burger > li {
+        border: 5px solid black;
+        position: relative;
+        overflow: hidden;
+      }
+      .burger-bread {
+        --bread-size: 200px;
+        width: var(--bread-size);
+        height: calc(var(--bread-size) / 5);
+        background-color: var(--bread-color);
+      }
+      .burger-bread.top {
+        --bread-radius: 50px;
+        height: calc(var(--bread-size) / 3);
+        border-top-right-radius: var(--bread-radius);
+        border-top-left-radius: var(--bread-radius);
+      }
+      .burger-bread.bottom {
+        --bread-radius: 20px;
+        border-top: none !important;
+        height: calc(var(--bread-size) / 6);
+        border-bottom-right-radius: var(--bread-radius);
+        border-bottom-left-radius: var(--bread-radius);
+      }
+      .burger-salad {
+        --salad-size: 180px;
+        width: var(--salad-size);
+        height: calc(var(--salad-size) / 14);
+        background-color: var(--salad-color);
+      }
+      .burger-tomato {
+        --tomato-size: 180px;
+        width: var(--tomato-size);
+        height: calc(var(--tomato-size) / 14);
+        background-color: var(--tomato-color);
+      }
+      .burger-salad,
+      .burger-tomato {
+        border-top: none !important;
+        border-bottom: none !important;
+      }
+      .burger-steak {
+        --steak-size: 220px;
+        width: var(--steak-size);
+        height: calc(var(--steak-size) / 6);
+        background-color: var(--steak-color);
+        border-radius: var(--steak-size);
+        position: relative;
+        overflow: hidden;
+      }
+      .burger-steak > span {
+        --cheese-size: 30px;
+        --size-margin: 50px;
+        width: var(--cheese-size);
+        height: var(--cheese-size);
+        background-color: var(--cheese-color);
+        display: block;
+        position: absolute;
+        border: 5px solid black;
+        top: calc(0px - var(--cheese-size) / 2);
+        transform: rotate(45deg);
+        z-index: 999;
+      }
+      .burger-steak.first-steak > span {
+        left: var(--size-margin);
+      }
+      .burger-steak.second-steak > span {
+        right: var(--size-margin);
+      }
+      .burger > li::after {
+        content: "";
+        right: 0;
+        top: 0;
+        bottom: 0;
+        width: 90%;
+        position: absolute;
+        background-color: rgba(255, 255, 255, 0.3);
+        border-top-left-radius: 100px;
+        border-bottom-left-radius: 100px;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <ul class="burger">
+        <li class="burger-bread top"></li>
+        <li class="burger-salad"></li>
+        <li class="burger-steak first-steak"><span></span></li>
+        <li class="burger-tomato"></li>
+        <li class="burger-steak second-steak"><span></span></li>
+        <li class="burger-bread bottom"></li>
+      </ul>
+    </main>
+  </body>
+</html>
