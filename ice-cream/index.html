@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ice Cream</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: #24262d;
+        color: white;
+      }
+      main {
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .glace {
+        --glace-cerise-color: #d3064e;
+        --glace-queue-color: #098739;
+        --glace-cornet-color: #f5c895;
+        --glace-boule-color: #e9acc7;
+        --glace-width: 170px;
+        --glace-height: calc(var(--glace-width) * 2.5);
+        width: var(--glace-width);
+        height: var(--glace-height);
+        transform: scale(0.8);
+      }
+      .glace > .bouleContainer {
+        width: var(--glace-width);
+        height: var(--glace-width);
+      }
+      .glace > .cornetContainer {
+        --cornet-height: calc(var(--glace-height) - var(--glace-width));
+        width: var(--glace-width);
+        height: var(--cornet-height);
+        position: relative;
+      }
+      .cornet {
+        width: 0;
+        height: 0;
+        border-left: calc(var(--glace-width) / 2) solid transparent;
+        border-right: calc(var(--glace-width) / 2) solid transparent;
+        border-top: var(--cornet-height) solid var(--glace-cornet-color);
+      }
+      .cornet::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: var(--glace-width);
+        height: var(--glace-width);
+      }
+      .bouleContainer,
+      .boule {
+        background-color: var(--glace-boule-color);
+        border-radius: 50%;
+        position: relative;
+        z-index: 9990;
+        transform: translateY(10%);
+      }
+      .boule {
+        --boule-size: 50%;
+        transform: translateY(50%);
+        left: calc(50% - var(--boule-size) / 2);
+        bottom: 15%;
+        width: var(--boule-size);
+        height: var(--boule-size);
+      }
+      .boule,
+      .boule::before,
+      .boule::after {
+        border-radius: 50%;
+        position: absolute;
+        background-color: var(--glace-boule-color);
+      }
+      .boule::before,
+      .boule::after {
+        content: "";
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+      }
+      .boule::before {
+        transform: translateX(-70%) translateY(-20%);
+      }
+      .boule::after {
+        transform: translateX(70%) translateY(-20%);
+      }
+      .visage {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        top: 0;
+        z-index: 999999;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        padding: 0 20px;
+      }
+      .visage > li {
+        --li-size: 15px;
+        width: var(--li-size);
+        height: var(--li-size);
+        background-color: #111;
+        border-radius: 50%;
+      }
+      .visage > li:nth-child(2) {
+        --li-size: 20px;
+        border: 2px solid #111;
+        background-color: transparent;
+        border-top-color: transparent;
+        border-left-color: transparent;
+        transform: translateY(7px) rotate(45deg);
+      }
+      .cerise {
+        --cerise-size: calc(var(--glace-width) / 3);
+        width: var(--cerise-size);
+        height: var(--cerise-size);
+        background-color: var(--glace-cerise-color);
+        position: absolute;
+        display: block;
+        z-index: 999999;
+        border-radius: 50%;
+        top: -10%;
+        right: 0;
+        transform: rotate(20deg);
+      }
+      .cerise::after {
+        --queue-height: 50px;
+        --queue-width: 4px;
+        content: "";
+        position: absolute;
+        height: var(--queue-height);
+        width: var(--queue-width);
+        background-color: var(--glace-queue-color);
+        top: calc(2px - var(--queue-height));
+        left: calc(50% - var(--queue-width) / 2);
+      }
+      .cerise > .visage {
+        padding: 0;
+        transform: translateY(-5px) scale(0.5);
+      }
+      .cerise > .visage > li {
+        --li-size: 8px;
+      }
+      .cerise > .visage > li:nth-child(2) {
+        --li-size: 15px;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div class="glace">
+        <div class="bouleContainer">
+          <div class="cerise">
+            <ul class="visage">
+              <li></li>
+              <li></li>
+              <li></li>
+            </ul>
+          </div>
+          <ul class="visage">
+            <li></li>
+            <li></li>
+            <li></li>
+          </ul>
+          <div class="boule"></div>
+        </div>
+        <div class="cornetContainer">
+          <div class="cornet"></div>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

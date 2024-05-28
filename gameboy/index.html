@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gameboy</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
+      * {
+        box-sizing: border-box;
+      }
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: #24262d;
+        color: white;
+        font-family: "Open Sans", sans-serif;
+      }
+      main {
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .gameBoy {
+        --gb-width: 270px;
+        --gb-height: calc(var(--gb-width) * 1.4);
+        --gb-color: #5bacc4;
+        --gb-black: #000;
+        --gb-top-radius: 20px;
+        --gb-gray-color: rgb(169, 169, 169);
+        --gb-font-size: 0.6em;
+        width: var(--gb-width);
+        height: var(--gb-height);
+        background-color: var(--gb-color);
+        border-top-left-radius: var(--gb-top-radius);
+        border-top-right-radius: var(--gb-top-radius);
+        position: relative;
+        display: flex;
+        flex-direction: column;
+      }
+      .gameBoy::after {
+        --after-height: calc(var(--gb-width) / 3);
+        content: "";
+        width: var(--gb-width);
+        height: var(--after-height);
+        background-color: #5bacc4;
+        border-radius: 50%;
+        position: absolute;
+        bottom: calc(0px - var(--after-height) / 2);
+      }
+      .screenContainer,
+      .keyboardContainer {
+        --side-margins: 15px;
+        width: calc(100% - var(--side-margins) * 2);
+        height: 50%;
+        z-index: 999;
+        margin: 0px var(--side-margins);
+      }
+      .screenContainer {
+        display: flex;
+        flex-direction: column;
+        margin-top: var(--side-margins);
+        border-radius: 10px;
+        background-color: var(--gb-black);
+      }
+      .screenContainer > div {
+        --screen-size: 60%;
+        width: var(--screen-size);
+        margin: auto;
+        border-radius: 3px;
+      }
+      .screenContainer > .screen {
+        background-color: white;
+        height: 70%;
+        margin-top: 20px;
+        margin-bottom: 5px;
+        position: relative;
+      }
+      .screenContainer > .logo > img {
+        width: 100%;
+      }
+      .screenContainer > .screen > div {
+        --power-width: calc(var(--side-margins) * 2.7);
+        position: absolute;
+        width: var(--power-width);
+        left: calc(0px - var(--power-width) - 2px);
+        top: 25px;
+        display: flex;
+        flex-direction: column;
+      }
+      .screenContainer > .screen > div > ul {
+        width: 100%;
+        height: 20px;
+        display: flex;
+        align-items: center;
+      }
+      .screenContainer > .screen > div > ul > li {
+        --li-size: 8px;
+        width: var(--li-size);
+        height: var(--li-size);
+        background-color: red;
+        border-radius: 50%;
+      }
+      .screenContainer > .screen > div > ul > li:not(:first-child) {
+        border: 2px solid transparent;
+        background-color: transparent;
+        border-left-color: var(--gb-gray-color);
+        border-bottom-color: var(--gb-gray-color);
+        transform: rotate(-135deg);
+      }
+      .screenContainer > .screen > div > label {
+        font-size: var(--gb-font-size);
+        color: var(--gb-gray-color);
+      }
+      .keyboardContainer {
+        display: flex;
+        flex-direction: column;
+        transform: translateY(15px);
+      }
+      .keyboardContainer > div {
+        width: 100%;
+        height: 50%;
+      }
+      .keyboardContainer > .top {
+        display: flex;
+        justify-content: row;
+        justify-content: center;
+      }
+      .top > div {
+        background-color: #5bacc4;
+        width: 50%;
+        display: flex;
+        align-items: center;
+      }
+      .plus {
+        --plus-size: 60px;
+        width: var(--plus-size);
+        height: var(--plus-size);
+        position: relative;
+      }
+      .plus::after,
+      .plus::before {
+        --plus-height: 25%;
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: var(--plus-height);
+        left: 0;
+        top: calc(50% - var(--plus-height) / 2);
+        background-color: var(--gb-black);
+      }
+      .plus::after {
+        transform: rotate(90deg);
+      }
+      .top > .right {
+        justify-content: end;
+      }
+      .top > .right > div {
+        --button-size: 30px;
+        --button-margin: 7px;
+        width: var(--button-size);
+        height: var(--button-size);
+        background-color: var(--gb-black);
+        border-radius: 50%;
+      }
+      .top > .right > div:nth-child(1) {
+        transform: translateY(var(--button-margin));
+      }
+      .top > .right > div:nth-child(2) {
+        transform: translateY(calc(0px - var(--button-margin)));
+        margin-left: 15px;
+      }
+      .bottom {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .bottom > ul {
+        display: flex;
+        font-size: var(--gb-font-size);
+      }
+      .bottom > ul > li {
+        margin: 0 5px;
+        color: var(--gb-black);
+        position: relative;
+      }
+      .bottom > ul > li::before {
+        --li-size: 30px;
+        content: "";
+        width: var(--li-size);
+        height: 5px;
+        left: calc(50% - var(--li-size) / 2);
+        background-color: var(--gb-black);
+        position: absolute;
+        border-radius: 40%;
+        top: -6px;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div class="gameBoy">
+        <div class="screenContainer">
+          <div class="screen">
+            <div>
+              <ul>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+              </ul>
+              <label>POWER</label>
+            </div>
+          </div>
+          <div class="logo">
+            <img
+              id="gbcLogo"
+              src="http://images.yoannbraie.fr/gbc.png?rq=33"
+              alt="logo"
+            />
+          </div>
+        </div>
+        <div class="keyboardContainer">
+          <div class="top">
+            <div class="left">
+              <div class="plus"></div>
+            </div>
+            <div class="right">
+              <div></div>
+              <div></div>
+            </div>
+          </div>
+          <div class="bottom">
+            <ul>
+              <li>SELECT</li>
+              <li>START</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>
