@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pikachu</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: #24262d;
+        color: white;
+      }
+      main {
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .pikachu {
+        --p-color: #f4ca3a;
+        --p-black-color: #111;
+        --p-red-color: #df4d2f;
+        --p-rose-color: #e5716b;
+        --p-width: 250px;
+        --p-height: calc(var(--p-width) / 1.8);
+        width: var(--p-width);
+        height: var(--p-height);
+        background-color: var(--p-color);
+        z-index: 2;
+        position: relative;
+        transform: scale(0.6);
+      }
+      .pikachu::after,
+      .pikachu::before {
+        content: "";
+        position: absolute;
+      }
+      .pikachu::before {
+        --b-height: calc(var(--p-width) / 2.2);
+        width: var(--p-width);
+        height: var(--b-height);
+        background-color: var(--p-color);
+        border-radius: 100%;
+        top: calc(0px - var(--b-height) / 2);
+      }
+      .pikachu::after {
+        --b-width: calc((var(--p-width) * 1.3));
+        --b-height: calc(var(--b-width) / 1.5);
+        width: var(--b-width);
+        height: var(--b-height);
+        background-color: var(--p-color);
+        border-radius: 100%;
+        bottom: calc(0px - var(--b-height) / 2);
+        left: calc(50% - var(--b-width) / 2);
+      }
+      .tempes {
+        width: 100%;
+        height: 100%;
+        z-index: 3;
+        position: relative;
+      }
+      .tempes::before,
+      .tempes::after {
+        content: "";
+        background-color: var(--p-color);
+        position: absolute;
+        width: 50%;
+        height: 100%;
+      }
+      .tempes::before {
+        transform-origin: top left;
+        transform: rotate(15deg);
+      }
+      .tempes::after {
+        transform-origin: top right;
+        transform: rotate(-15deg);
+        right: 0;
+      }
+      .oreilles {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        top: 0;
+        transform: scale(0.9);
+      }
+      .oreilles > div {
+        position: absolute;
+        width: 100%;
+        height: 70%;
+        border-radius: 100%;
+        background-color: var(--p-black-color) !important;
+        overflow: hidden;
+      }
+      .oreilles > div.left {
+        transform-origin: left;
+        transform: translateX(100px) rotate(-138deg);
+      }
+      .oreilles > div.right {
+        transform-origin: right;
+        transform: translateX(-100px) rotate(138deg);
+      }
+      .oreilles > div::before {
+        content: "";
+        background-color: var(--p-color);
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        border-radius: 100%;
+        transform: rotate(60deg) scale(1.2);
+      }
+      .oreilles > div.right::before {
+        transform: rotate(-60deg) scale(1.2);
+      }
+      .visage {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        z-index: 5;
+        top: 0;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+      }
+      .visage > li:nth-child(1),
+      .visage > li:nth-child(3) {
+        --eye-size: 65px;
+        width: var(--eye-size);
+        height: var(--eye-size);
+        background-color: var(--p-black-color);
+        border-radius: 50%;
+      }
+      .visage > li:nth-child(1) {
+        transform: translateX(-10px) translateY(10px);
+      }
+      .visage > li:nth-child(3) {
+        transform: translateX(10px) translateY(10px);
+      }
+      .visage > li:nth-child(1)::before,
+      .visage > li:nth-child(3)::before {
+        --b-size: 35%;
+        content: "";
+        position: absolute;
+        width: var(--b-size);
+        height: var(--b-size);
+        background-color: white;
+        border-radius: 50%;
+        top: 15px;
+      }
+      .visage > li:nth-child(1)::before {
+        right: 15px;
+      }
+      .visage > li:nth-child(3)::before {
+        left: 15px;
+      }
+      .visage > li:nth-child(2) {
+        --noose-size: 30px;
+        width: var(--noose-size);
+        height: calc(var(--noose-size) / 2);
+        background-color: var(--p-black-color);
+        border-radius: 100%;
+        transform: translateY(40px);
+      }
+      .joues {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        z-index: 6;
+        top: 0;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        transform: translateY(90px);
+      }
+      .joues::before,
+      .joues::after {
+        content: "";
+        --joues-size: 65px;
+        --joues-margin: 55px;
+        width: var(--joues-size);
+        height: var(--joues-size);
+        border: 4px solid var(--p-black-color);
+        border-radius: 50%;
+        background-color: var(--p-red-color);
+      }
+      .joues::before {
+        transform: translateX(calc(0px - var(--joues-margin)));
+      }
+      .joues::after {
+        transform: translateX(var(--joues-margin));
+      }
+      .bouche {
+        --bouche-size: 60px;
+        --bouche-radius: 100%;
+        --bouche-border: 5px solid var(--p-black-color);
+        width: var(--bouche-size);
+        height: calc(var(--bouche-size) * 1.1);
+        background-color: var(--p-rose-color);
+        z-index: 10;
+        position: absolute;
+        left: calc(50% - var(--bouche-size) / 2);
+        border-bottom-left-radius: var(--bouche-radius);
+        border-bottom-right-radius: var(--bouche-radius);
+        transform: translateY(5px);
+        border-bottom: var(--bouche-border);
+        border-left: var(--bouche-border);
+        border-right: var(--bouche-border);
+      }
+      .bouche::after,
+      .bouche::before {
+        --levres-size: 50px;
+        --levres-width: calc(var(--levres-size) - 3px);
+        content: "";
+        position: absolute;
+        width: var(--levres-width);
+        height: var(--levres-width);
+        border-radius: 50%;
+        border: var(--bouche-border);
+        left: -3px;
+        border-left-color: transparent;
+        border-top-color: transparent;
+        top: -38px;
+        background-color: var(--p-color);
+      }
+      .bouche::before {
+        transform: translateX(-26px) rotateX(40deg) rotate(45deg);
+      }
+      .bouche::after {
+        transform: translateX(26px) rotateX(40deg) rotate(45deg);
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div class="pikachu">
+        <div class="tempes"></div>
+        <div class="oreilles">
+          <div class="left"></div>
+          <div class="right"></div>
+        </div>
+        <ul class="visage">
+          <li></li>
+          <li></li>
+          <li></li>
+        </ul>
+        <div class="joues"></div>
+        <div class="bouche"></div>
+      </div>
+    </main>
+  </body>
+</html>

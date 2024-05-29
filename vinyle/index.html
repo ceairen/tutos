@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vinyle</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: #24262d;
+        color: white;
+      }
+      main {
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .tourneDisque {
+        --td-bd-color: #947654;
+        --td-bg-color: #c49a6e;
+        --d-bg-color: #261f1f;
+        --d-line-color: #4d4848;
+        --td-size: 400px;
+        --td-radius: 26px;
+        --td-margins: 18px;
+        width: var(--td-size);
+        height: var(--td-size);
+        border-radius: var(--td-radius);
+        background-color: var(--td-bd-color);
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .tourneDisque::before {
+        content: "";
+        position: absolute;
+        top: var(--td-margins);
+        left: var(--td-margins);
+        right: var(--td-margins);
+        bottom: var(--td-margins);
+        background-color: var(--td-bg-color);
+        border-radius: calc(var(--td-radius) / 2);
+      }
+      .tourneDisque > .disque {
+        --d-size: calc(var(--td-size) / 1.5);
+        width: var(--d-size);
+        position: relative;
+        height: var(--d-size);
+        background-color: var(--d-bg-color);
+        z-index: 999;
+        border-radius: 50%;
+        border: 4px solid #eee;
+      }
+      .disque > li {
+        --li-size: 90%;
+        width: var(--li-size);
+        height: var(--li-size);
+        border-radius: 50%;
+        border: 1px solid var(--d-line-color);
+        z-index: 999;
+        position: absolute;
+        top: calc(50% - var(--li-size) / 2);
+        left: calc(50% - var(--li-size) / 2);
+      }
+      li:nth-child(2) {
+        --li-size: 80%;
+      }
+      li:nth-child(3) {
+        --li-size: 70%;
+      }
+      li:nth-child(4) {
+        --li-size: 60%;
+      }
+      li:nth-child(5) {
+        --li-size: 50%;
+      }
+      li:nth-child(6),
+      li:nth-child(7) {
+        border: none;
+      }
+      li:nth-child(6) {
+        --li-size: 40%;
+        background-color: #eda860;
+      }
+      li:nth-child(7) {
+        --li-size: 15%;
+        background-color: #c15652;
+      }
+      .tige {
+        --tige-size: 80%;
+        --tige-height: var(--td-margins);
+        width: var(--tige-size);
+        height: var(--tige-height);
+        position: absolute;
+        top: calc((100% - var(--tige-size)) / 2);
+        left: calc((100% - var(--tige-size)) / 2);
+        display: flex;
+        flex-direction: row;
+        z-index: 9999999;
+      }
+      .tige > li {
+        display: block;
+        height: 100%;
+        width: calc(100% / 5);
+      }
+      .tige > li:nth-child(1) {
+        width: var(--tige-height);
+        height: var(--tige-height);
+        background-color: #3b352b;
+        border-radius: 50%;
+        transform: scale(1.5);
+        z-index: 999;
+      }
+      .tige > li:nth-child(2),
+      .tige > li:nth-child(3),
+      .tige > li:nth-child(4) {
+        background-color: #eee;
+        z-index: 99;
+        border-radius: 20px;
+      }
+      .tige > li:nth-child(5) {
+        --triangle-size: var(--tige-height);
+        width: 0;
+        height: 0;
+        border-top: var(--triangle-size) solid transparent;
+        border-bottom: var(--triangle-size) solid transparent;
+        border-right: calc(var(--triangle-size) * 4) solid #eda860;
+        transform: translateX(-50%)
+          translateY(calc(50% - var(--triangle-size) * 1.5));
+      }
+      .tige > li:nth-child(3) {
+        transform-origin: left;
+        width: calc(100% / 5 + var(--tige-height));
+        transform: translateX(-11px) translateY(-5px) rotate(40deg);
+      }
+      .tige > li:nth-child(4) {
+        transform-origin: left;
+        transform: translateX(-42px) translateY(42px);
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+      .tige > li:nth-child(5) {
+        transform-origin: left;
+        transform: translateX(-82px) translateY(33px);
+      }
+      .tige {
+        transform-origin: top left;
+        transform: translateX(20px) rotate(60deg) scale(0.9);
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div class="tourneDisque">
+        <ul class="tige">
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+        </ul>
+        <ul class="disque">
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+        </ul>
+      </div>
+    </main>
+  </body>
+</html>
