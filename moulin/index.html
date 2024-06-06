@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Moulin</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: #90c5d9;
+        color: white;
+      }
+      main {
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .moulin {
+        --helice-color: #af7c4b;
+        --helice-dark: #976433;
+        --base-width: 130px;
+        --moulin-height: 350px;
+        width: var(--base-width);
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        height: var(--moulin-height);
+      }
+      .moulin > li {
+        --locale-height: 0px;
+        --locale-color: #eee;
+        height: var(--locale-height);
+        position: relative;
+        background-color: var(--locale-color);
+      }
+      .base {
+        --locale-color: #cccbb7 !important;
+        --locale-height: calc(var(--moulin-height) * 55 / 100) !important;
+      }
+      .base::before,
+      .base::after {
+        --border-size: 10px;
+        content: "";
+        position: absolute;
+      }
+      .base::before {
+        border-top: var(--locale-height) solid transparent;
+        border-bottom: 0 solid transparent;
+        border-left: var(--border-size) solid var(--locale-color);
+        right: calc(0px - var(--border-size));
+      }
+      .base::after {
+        border-top: var(--locale-height) solid transparent;
+        border-bottom: 0 solid transparent;
+        border-right: var(--border-size) solid var(--locale-color);
+        left: calc(0px - var(--border-size));
+      }
+      .top {
+        --locale-color: #e8e6d2 !important;
+        --locale-height: calc(var(--moulin-height) * 10 / 100) !important;
+        z-index: 3;
+      }
+      .roof {
+        --locale-color: #961931 !important;
+        --locale-height: calc(var(--moulin-height) * 35 / 100) !important;
+        background-color: transparent !important;
+        height: var(--locale-height);
+        bottom: 0;
+        border-left: calc(var(--base-width) / 2) solid transparent;
+        border-right: calc(var(--base-width) / 2) solid transparent;
+        border-bottom: calc(var(--locale-height)) solid var(--locale-color);
+        transform-origin: bottom;
+        transform: scaleX(1.2);
+        z-index: 1;
+      }
+      .roof::before,
+      .roof::after {
+        --elt-width: 12px;
+        content: "";
+        position: absolute;
+        background-color: var(--locale-color);
+        width: var(--elt-width);
+        height: var(--locale-height);
+        border-radius: 100%;
+        top: 0;
+        bottom: 0;
+        z-index: 999;
+        left: calc(50% - var(--elt-width) / 2);
+        transform-origin: top;
+      }
+      .roof::before {
+        transform: rotate(28deg) scaleY(1.12);
+      }
+      .roof::after {
+        transform: rotate(-28deg) scaleY(1.12);
+      }
+      .helices {
+        --helices-size: 350px;
+        position: absolute;
+        top: calc(50% - var(--helices-size) / 2);
+        left: calc(50% - var(--helices-size) / 2);
+        width: var(--helices-size);
+        height: var(--helices-size);
+        z-index: 200000;
+      }
+      .helices > li {
+        --li-width: 8px;
+        position: absolute;
+        width: var(--li-width);
+        height: 50%;
+        background-color: var(--helice-dark);
+        left: calc(50% - var(--li-width) / 2);
+        transform-origin: bottom;
+      }
+      .helices > li::before,
+      .helices > li::after {
+        --he-width: 20px;
+        content: "";
+        position: absolute;
+        top: 0;
+        left: var(--li-width);
+        width: var(--he-width);
+        height: 60%;
+        border: var(--li-width) solid var(--helice-color);
+      }
+      .helices > li::before {
+        top: 25%;
+        height: inherit;
+        height: 15%;
+      }
+      .helices > li:nth-child(2) {
+        transform: rotate(90deg);
+      }
+      .helices > li:nth-child(3) {
+        transform: rotate(180deg);
+      }
+      .helices > li:nth-child(4) {
+        transform: rotate(270deg);
+      }
+      .helices::before {
+        --center-size: 30px;
+        content: "";
+        position: absolute;
+        background-color: #7b4b19;
+        width: var(--center-size);
+        height: var(--center-size);
+        left: calc(50% - var(--center-size) / 2);
+        top: calc(50% - var(--center-size) / 2);
+        z-index: 99;
+        border-radius: 50%;
+      }
+      .fenetres {
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        right: 0;
+      }
+      .fenetres::after,
+      .fenetres::before {
+        --f-margin: 8%;
+        --f-width: 16%;
+        --f-height: 66%;
+        content: "";
+        width: var(--f-width);
+        height: var(--f-height);
+        background-color: #656450;
+        position: absolute;
+        top: calc((100% - var(--f-height)) / 2);
+      }
+      .fenetres::before {
+        left: var(--f-margin);
+      }
+      .fenetres::after {
+        right: var(--f-margin);
+      }
+      .ombre {
+        --locale-height: calc(var(--moulin-height) * 55 / 100 / 2) !important;
+        background-color: rgba(255, 255, 255, 0.2);
+        position: absolute;
+        z-index: 1000;
+        top: 10px;
+        left: calc(50% - 10px);
+        width: 20px;
+        height: var(--locale-height);
+        border-radius: 100%;
+        transform-origin: top;
+        transform: translateX(-5px) translateY(15px) rotate(25deg);
+      }
+      .sol {
+        background-color: var(--locale-color);
+        width: calc(100% + 10px * 2);
+        height: 30px;
+        position: absolute;
+        bottom: -15px;
+        border-radius: 100%;
+        left: -10px;
+      }
+      .moulin::after {
+        content: "";
+        width: 200%;
+        height: 80px;
+        background-color: #c9e1ae;
+        bottom: -40px;
+        position: absolute;
+        z-index: -1;
+        left: -50%;
+        border-radius: 100%;
+      }
+      .porte {
+        --p-radius: 40px;
+        background-color: #a07347;
+        width: 50px;
+        height: 70px;
+        border-top-right-radius: var(--p-radius);
+        border-top-left-radius: var(--p-radius);
+        position: absolute;
+        bottom: -15px;
+        left: calc(50% - 25px);
+      }
+      .porte::before {
+        --s-color: rgba(255, 255, 255, 0.1);
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        border-top-right-radius: var(--p-radius);
+        border-top-left-radius: var(--p-radius);
+        border-left: 10px solid var(--s-color);
+        transform: scaleX(0.9);
+        transform-origin: bottom;
+      }
+      .brique {
+        --b-w: 35px;
+        --b-h: 25px;
+        width: var(--b-w);
+        height: var(--b-h);
+        position: absolute;
+      }
+      .brique::after,
+      .brique::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        height: 50%;
+      }
+      .brique::before {
+        top: 0;
+        background-color: #8e8c79;
+        transform: translateX(5px);
+      }
+      .brique::after {
+        bottom: 0;
+        background-color: #a2a08c;
+        transform: translateX(-5px);
+      }
+      .b1 {
+        top: 20px;
+        left: 10px;
+        transform: scale(0.8);
+      }
+      .b2 {
+        bottom: 20px;
+        right: 5px;
+        transform: scale(0.7);
+        transform-origin: right;
+      }
+      .b3 {
+        top: 40%;
+        left: 40%;
+        transform: rotate(180deg);
+      }
+      .b4 {
+        top: inherit;
+        bottom: 5%;
+        left: 1%;
+        transform-origin: left;
+        transform: scale(0.6);
+      }
+      .helices {
+        animation: animate 25s linear infinite;
+      }
+      @keyframes animate {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <ul class="moulin">
+        <li class="roof">
+          <div class="ombre"></div>
+        </li>
+        <li class="top">
+          <div class="fenetres"></div>
+          <ul class="helices">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+          </ul>
+        </li>
+        <li class="base">
+          <div class="brique b1"></div>
+          <div class="brique b2"></div>
+          <div class="brique b3"></div>
+          <div class="brique b4"></div>
+          <div class="sol"></div>
+          <div class="porte"></div>
+        </li>
+      </ul>
+    </main>
+  </body>
+</html>

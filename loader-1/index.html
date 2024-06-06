@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Loader</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: #24262d;
+        color: white;
+      }
+      main {
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .loader {
+        --loader-size: 50px;
+        --loader-border-size: 4px;
+        --loader-color: #eee;
+        --loader-animation-duration: 1s;
+        position: relative;
+        width: var(--loader-size);
+        height: var(--loader-size);
+      }
+      .loader,
+      .loader::after,
+      .loader::before {
+        border-radius: 50%;
+      }
+      .loader::after,
+      .loader::before {
+        --elt-size: 100%;
+        --elt-position: calc(50% - var(--elt-size) / 2);
+        content: "";
+        position: absolute;
+        border: var(--loader-border-size) solid var(--loader-color);
+        top: var(--elt-position);
+        left: var(--elt-position);
+        width: var(--elt-size);
+        height: var(--elt-size);
+      }
+      .loader::before {
+        --elt-size: calc(100% - var(--loader-border-size) * 2) !important;
+      }
+      .loader::after,
+      .loader::before {
+        border-top-color: transparent;
+        border-bottom-color: transparent;
+      }
+      .loader::before {
+        border-left-color: transparent;
+      }
+      .loader::after {
+        border-right-color: transparent;
+      }
+      @keyframes rotate {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      .loader::before {
+        animation: rotate linear var(--loader-animation-duration) infinite
+          reverse;
+      }
+      .loader::after {
+        animation: rotate linear var(--loader-animation-duration) infinite;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <span class="loader"></span>
+    </main>
+  </body>
+</html>

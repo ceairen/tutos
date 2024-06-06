@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sun</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: #24262d;
+        color: white;
+      }
+      main {
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .decors {
+        --carreau-size: 24px;
+        --line-color: #d1039d;
+        --bg-color: #1e202b;
+        position: absolute;
+        top: 0;
+        right: -100vw;
+        bottom: 0;
+        left: -100vw;
+        background-color: var(--bg-color);
+        background-image: linear-gradient(
+            transparent calc(var(--carreau-size) - 1px),
+            var(--line-color) var(--carreau-size),
+            transparent var(--carreau-size)
+          ),
+          linear-gradient(
+            90deg,
+            transparent calc(var(--carreau-size) - 1px),
+            var(--line-color) var(--carreau-size),
+            transparent var(--carreau-size)
+          );
+        background-size: 100% var(--carreau-size), var(--carreau-size) 100%;
+        transform: perspective(400px) rotateX(80deg);
+      }
+      .decors::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        height: 30px;
+        background-color: #e382e2;
+        z-index: 9999;
+        box-shadow: 0px 0px 89px 66px #f862f7;
+        opacity: 0.7;
+      }
+      .ciel {
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        bottom: 0;
+        background: radial-gradient(
+          circle,
+          rgba(184, 77, 153, 1) -42%,
+          rgba(17, 17, 17, 1) 92%
+        );
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .soleil {
+        --sun-size: 300px;
+        --sun-gradient: repeating-linear-gradient(
+          0deg,
+          black 0,
+          black 17px,
+          transparent 5px,
+          transparent 24px
+        );
+        width: var(--sun-size);
+        height: var(--sun-size);
+        background: linear-gradient(
+          180deg,
+          rgba(244, 233, 33, 1) 16%,
+          rgba(184, 77, 153, 1) 83%
+        );
+        border-radius: 50%;
+        transform: translateY(-150px);
+        mask-image: var(--sun-gradient);
+        -webkit-mask-composite: source-in;
+        mask-composite: intersect;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div class="ciel">
+        <div class="soleil"></div>
+      </div>
+      <div class="decors"></div>
+    </main>
+  </body>
+</html>

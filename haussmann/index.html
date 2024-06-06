@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Haussmann</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: #90c5d9;
+        color: white;
+      }
+      main {
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .immeuble {
+        --i-width: 200px;
+        --i-height: calc(var(--i-width) * 2.5);
+        --i-wall-color: #ebedde;
+        --i-roof-color: #a4b4bb;
+        --i-shadow: #a6a89e;
+        --i-blue: #6eadd2;
+        --i-dark-blue: #4d7084;
+        --i-very-dark-blue: #437e99;
+        --i-gray: #a5b4bb;
+        width: var(--i-width);
+        height: var(--i-height);
+        display: flex;
+        flex-direction: column;
+      }
+      .immeuble > li {
+        flex: 1;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        position: relative;
+      }
+      .immeuble > li:nth-child(1),
+      .immeuble > li:nth-child(2) {
+        transform: scale(1.03);
+      }
+      .immeuble > li:nth-child(1) {
+        background-color: transparent;
+        align-items: end;
+        border-bottom: 6px solid #a8aaa3;
+      }
+      .immeuble > li:nth-child(2) {
+        border-top: 3px solid #bcbfb2;
+        background-color: var(--i-wall-color);
+        border-bottom: 3px solid var(--i-shadow);
+        margin-bottom: 2px;
+        margin-top: 2px;
+      }
+      .immeuble > li:nth-child(3) {
+        border-top: 3px solid var(--i-shadow);
+        background-color: var(--i-wall-color);
+        background-image: linear-gradient(#ccc 1px, transparent 1px);
+        background-size: 30px 21px;
+        border-bottom: 5px solid var(--i-dark-blue);
+      }
+      .immeuble > li:nth-child(4) {
+        background-color: var(--i-wall-color);
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: end;
+      }
+      .fenetre {
+        --border-color: #f9fefe;
+        --border-size: 3px;
+        --f-color: #c7d5df;
+        --s-color: #adadad;
+        height: 80%;
+        width: 50px;
+        background-color: var(--f-color);
+        border: var(--border-size) solid var(--border-color);
+        position: relative;
+      }
+      .fenetre::after,
+      .fenetre::before {
+        content: "";
+        position: absolute;
+        background-color: var(--border-color);
+        z-index: 999;
+      }
+      .fenetre::before {
+        --f-shadow: 1px 3px 7px 1px var(--s-color);
+        width: 100%;
+        height: var(--border-size);
+        top: calc(50% - var(--border-size) / 2);
+        left: 0;
+        -webkit-box-shadow: var(--f-shadow);
+        box-shadow: var(--f-shadow);
+        z-index: 2;
+      }
+      .fenetre::after {
+        --f-shadow: 3px 3px 11px 1px var(--s-color);
+        height: 100%;
+        width: var(--border-size);
+        left: calc(50% - var(--border-size) / 2);
+        top: 0;
+        -webkit-box-shadow: var(--f-shadow);
+        box-shadow: var(--f-shadow);
+        z-index: 1;
+      }
+      .balustrade {
+        --b-color: #3b4042;
+        --b-size: 2px;
+        --border-style: var(--b-size) solid var(--b-color);
+        position: absolute;
+        height: 17%;
+        z-index: 3;
+        bottom: 3px;
+        left: calc(0px - var(--b-size));
+        right: calc(0px - var(--b-size));
+        border-top: var(--border-style);
+        border-bottom: var(--border-style);
+      }
+      .balustrade::before,
+      .balustrade::after {
+        --t-deg: 14deg;
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: calc(var(--b-size) / 3);
+        background-color: var(--b-color);
+        top: 0;
+        opacity: 0.7;
+      }
+      .balustrade::before {
+        transform-origin: top left;
+        transform: rotate(var(--t-deg));
+      }
+      .balustrade::after {
+        transform-origin: top right;
+        transform: rotate(calc(0deg - var(--t-deg)));
+      }
+      .auvent {
+        --a-color: #694e35;
+        --a-height: 12px;
+        position: absolute;
+        height: var(--a-height);
+        background-color: var(--a-color);
+        z-index: 9;
+        top: calc(0px - var(--border-size));
+        left: calc(0px - var(--border-size));
+        right: calc(0px - var(--border-size));
+      }
+      .auvent::before,
+      .auvent::after {
+        --l-size: 8px;
+        content: "";
+        position: absolute;
+        width: 0;
+        height: 0;
+        border-top: var(--a-height) solid transparent;
+        border-bottom: 0px solid transparent;
+      }
+      .auvent::before {
+        border-right: var(--l-size) solid var(--a-color);
+        left: calc(0px - var(--l-size));
+      }
+      .auvent::after {
+        border-left: var(--l-size) solid var(--a-color);
+        right: calc(0px - var(--l-size));
+      }
+      .decoration {
+        width: 100%;
+        height: 16px;
+        background-color: var(--i-blue);
+        position: absolute;
+      }
+      .decoration::before {
+        --d-margin: 3px;
+        content: "";
+        position: absolute;
+        top: var(--d-margin);
+        left: var(--d-margin);
+        right: var(--d-margin);
+        bottom: var(--d-margin);
+        border: 1px solid rgba(1, 1, 1, 0.4);
+      }
+      .decoration.top {
+        top: 0;
+      }
+      .decoration.bottom {
+        bottom: 0;
+      }
+      .baie,
+      .porte {
+        background-color: #2d3b45;
+        width: 50px;
+        height: 80%;
+        position: relative;
+        z-index: 999;
+        border: 3px solid var(--i-very-dark-blue);
+      }
+      .baie {
+        transform-origin: top;
+        transform: scaleY(0.7);
+      }
+      .porte {
+        border-bottom-width: 8px;
+      }
+      .toit {
+        position: absolute;
+        height: 0;
+        bottom: 0;
+        width: 100%;
+        border-bottom: calc(var(--i-height) / 5) solid var(--i-gray);
+        border-left: 30px solid transparent;
+        border-right: 30px solid transparent;
+      }
+      .ffenetre {
+        width: 50px;
+        height: 60px;
+        background-color: #2d3b45;
+        z-index: 9;
+        border: 4px solid #c9d0d5;
+        border-bottom-width: 12px;
+        position: relative;
+      }
+      .ffenetre::before {
+        content: "";
+        position: absolute;
+        width: 3px;
+        height: 100%;
+        background-color: #c9d0d5;
+        left: calc(50% - 1px);
+      }
+      .ffenetre::after {
+        --a-size: 10px;
+        content: "";
+        position: absolute;
+        width: 0;
+        height: 0;
+        border-left: 25px solid transparent;
+        border-right: 25px solid transparent;
+        border-bottom: var(--a-size) solid #c9d1d6;
+        left: -4px;
+        top: calc(0px - var(--a-size) - 4px);
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <ul class="immeuble">
+        <li>
+          <div class="toit"></div>
+          <div class="ffenetre"></div>
+          <div class="ffenetre"></div>
+        </li>
+        <li>
+          <div class="fenetre">
+            <div class="balustrade"></div>
+          </div>
+          <div class="fenetre">
+            <div class="balustrade"></div>
+          </div>
+        </li>
+        <li>
+          <div class="fenetre">
+            <div class="auvent"></div>
+            <div class="balustrade"></div>
+          </div>
+          <div class="fenetre">
+            <div class="auvent"></div>
+            <div class="balustrade"></div>
+          </div>
+        </li>
+        <li>
+          <div class="decoration top"></div>
+          <div class="baie"></div>
+          <div class="porte"></div>
+          <div class="decoration bottom"></div>
+        </li>
+      </ul>
+    </main>
+  </body>
+</html>

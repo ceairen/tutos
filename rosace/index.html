@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rosace</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: #24262d;
+        color: white;
+      }
+      main {
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .rosace {
+        --r-size: 300px;
+        --r-border-size: 1px;
+        position: relative;
+        width: var(--r-size);
+        height: var(--r-size);
+      }
+      .rosace,
+      .rosace > li {
+        border-radius: 50%;
+        border: var(--r-border-size) solid chocolate;
+      }
+      .rosace > li {
+        --li-size: calc(var(--r-size) - 43px);
+        width: var(--li-size);
+        height: var(--li-size);
+        position: absolute;
+        left: calc(50% - var(--li-size) / 2);
+        bottom: 50%;
+        transform-origin: bottom;
+      }
+      .rosace {
+        overflow: hidden;
+        border: none;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <ul class="rosace"></ul>
+    </main>
+    <script>
+      (function () {
+        const rosace = document.querySelector(".rosace");
+        const nbOfCircle = 50;
+        [...Array(nbOfCircle).keys()].map((i) => {
+          const li = document.createElement("li");
+          li.style.transform = `rotate(${(i + 1) * (360 / nbOfCircle)}deg)`;
+          rosace.appendChild(li);
+        });
+      })();
+    </script>
+  </body>
+</html>

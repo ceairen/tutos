@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tiktok</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: #24262d;
+        color: white;
+      }
+      main {
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .tiktok {
+        position: relative;
+      }
+      .tiktok > li {
+        --t-color: white;
+        --li-width: 12px;
+        --li-height: 45px;
+        --li-translate: 4px;
+        width: var(--li-width);
+        height: var(--li-height);
+        background-color: var(--t-color);
+        position: relative;
+      }
+      .tiktok > li::before,
+      .tiktok > li::after {
+        --e-size: 20px;
+        content: "";
+        position: absolute;
+        border: var(--li-width) solid var(--t-color);
+        width: var(--e-size);
+        height: var(--e-size);
+        border-radius: 50%;
+      }
+      .tiktok > li::before {
+        top: calc(0px - var(--e-size) - var(--li-width));
+        left: 0px;
+        border-top-color: transparent;
+        border-right-color: transparent;
+        border-left-color: transparent;
+        transform: translateY(var(--li-width)) rotate(45deg);
+      }
+      .tiktok > li::after {
+        bottom: calc(0px - var(--e-size) - var(--li-width));
+        right: 0px;
+        border-right-color: transparent;
+        transform: translateY(calc(0px - var(--li-width))) rotate(-45deg);
+      }
+      .tiktok > li:nth-child(1),
+      .tiktok > li:nth-child(3) {
+        position: absolute;
+        top: 0;
+        opacity: 0.8;
+      }
+      .tiktok > li:nth-child(1) {
+        --t-color: #3cbfdb;
+        transform: translateX(calc(0px - var(--li-translate)))
+          translateY(calc(0px - var(--li-translate)));
+      }
+      .tiktok > li:nth-child(3) {
+        --t-color: #e12e61;
+        transform: translateX(var(--li-translate))
+          translateY(var(--li-translate));
+      }
+      .tiktok > li:nth-child(2) {
+        z-index: 1;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <ul class="tiktok">
+        <li></li>
+        <li></li>
+        <li></li>
+      </ul>
+    </main>
+  </body>
+</html>
