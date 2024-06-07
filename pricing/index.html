@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pricing</title>
+    <script
+      src="https://unpkg.com/react@17/umd/react.development.js"
+      crossorigin
+    ></script>
+    <script
+      src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"
+      crossorigin
+    ></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap");
+      * {
+        box-sizing: border-box;
+        font-family: "Quicksand", sans-serif;
+      }
+      body {
+        --main-color: #0c0c0c;
+        margin: 0;
+        padding: 0;
+        background-color: var(--main-color);
+        color: white;
+      }
+      main {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+      }
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      :root {
+        --grey-color: #525252;
+        --lightgrey-color: lightgray;
+      }
+      h1,
+      h2 {
+        margin: 0;
+        padding: 0;
+      }
+      section {
+        width: 100%;
+        text-align: center;
+      }
+      section > h1 {
+        font-size: 1.8em;
+      }
+      section > h3 {
+        color: var(--grey-color);
+        margin-top: 50px;
+        display: none;
+      }
+      section > p {
+        color: var(--grey-color);
+        font-size: 0.8em;
+      }
+      .cards {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        margin-top: 50px;
+      }
+      .cards > li {
+        margin: 0 10px;
+      }
+      .card {
+        width: 260px;
+        text-align: left;
+        background-color: #131313;
+        padding: 20px;
+        position: relative;
+        overflow: hidden;
+      }
+      .card.pinned {
+        background-color: #7a5ff0;
+      }
+      .card > h2 {
+        font-weight: normal;
+        font-size: 1em;
+        position: relative;
+      }
+      .card > label {
+        font-weight: normal;
+        font-size: 2em;
+        position: relative;
+      }
+      .card > label > span {
+        font-weight: normal;
+        font-size: 0.4em;
+        color: var(--grey-color);
+      }
+      .card.pinned > label > span {
+        color: var(--lightgrey-color);
+      }
+      .card > hr {
+        border: none;
+        height: 1px;
+        background: linear-gradient(
+          90deg,
+          rgba(255, 255, 255, 0.03) 6%,
+          rgba(255, 255, 255, 0.5) 50%,
+          rgba(255, 255, 255, 0.03) 92%
+        );
+        opacity: 0.7;
+        margin: 15px 0;
+      }
+      .features > li {
+        color: white;
+        font-size: 0.8em;
+        font-weight: bold;
+        margin: 10px 0;
+        text-transform: capitalize;
+        position: relative;
+      }
+      .features > li:not(.available) {
+        opacity: 0.2;
+      }
+      .features > li::before {
+        content: "★";
+        display: inline-block;
+        transform: scale(0.8);
+        margin-right: 5px;
+        color: #05cd99;
+      }
+      .features > li:not(.available)::before {
+        color: white;
+      }
+      .card > button {
+        width: 100%;
+        outline: none;
+        cursor: pointer;
+        margin-top: 30px;
+        background-color: rgba(255, 255, 255, 0.06);
+        color: white;
+        font-weight: bold;
+        border: none;
+        padding: 15px;
+        position: relative;
+        z-index: 999;
+      }
+      .card.pinned > button {
+        background-color: -12px -12px 8px -16px #949494;
+      }
+      .card::before,
+      .card::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        top: 0;
+        z-index: 0;
+        background-color: rgba(1, 1, 1, 0.2);
+      }
+      .card::before {
+        transform: rotate(60deg) scale(2);
+        transform-origin: bottom left;
+      }
+      .card::after {
+        transform: rotate(-20deg) scale(2);
+        transform-origin: top left;
+      }
+      .card.pinned::before,
+      .card.pinned::after {
+        background-color: rgba(1, 1, 1, 0.05);
+      }
+      .card:not(.pinned) {
+        box-shadow: -12px -12px 8px -16px #949494;
+      }
+      section > h3 {
+        display: block;
+      }
+      .card.pinned {
+        animation: animate 1s linear infinite alternate;
+      }
+      @keyframes animate {
+        0% {
+          transform: scale(1);
+        }
+        100% {
+          transform: scale(1.04);
+        }
+      }
+      .card.pinned:hover {
+        animation-play-state: paused;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/babel">
+      function Card({ card, monthlyMode }) {
+        const { title, features, price, pinned } = card;
+        return (
+          <li className={`card ${pinned ? "pinned" : ""}`}>
+            <h2>{title}</h2>
+            <label>
+              {monthlyMode ? price.monthly : price.yearly}€
+              <span>/{monthlyMode ? "mois" : "an"}</span>
+            </label>
+            <hr />
+            <ul className={`features`}>
+              {features.map(({ title, available }, index) => {
+                return (
+                  <li
+                    key={index}
+                    className={`${available ? "available" : null}`}
+                  >
+                    {title}
+                  </li>
+                );
+              })}
+            </ul>
+            <button>Je démarre</button>
+          </li>
+        );
+      }
+      function App() {
+        const cards = [
+          {
+            pinned: false,
+            title: "Basique",
+            price: {
+              monthly: "0,99",
+              yearly: "9,99",
+            },
+            features: [
+              {
+                title: "feature 1",
+                available: true,
+              },
+              {
+                title: "feature 2",
+                available: true,
+              },
+              {
+                title: "feature 3",
+                available: false,
+              },
+              {
+                title: "feature 4",
+                available: false,
+              },
+              {
+                title: "feature 5",
+                available: false,
+              },
+              {
+                title: "feature 6",
+                available: false,
+              },
+            ],
+          },
+          {
+            pinned: true,
+            title: "Standard",
+            price: {
+              monthly: "12,99",
+              yearly: "119,99",
+            },
+            features: [
+              {
+                title: "feature 1",
+                available: true,
+              },
+              {
+                title: "feature 2",
+                available: true,
+              },
+              {
+                title: "feature 3",
+                available: true,
+              },
+              {
+                title: "feature 4",
+                available: true,
+              },
+              {
+                title: "feature 5",
+                available: false,
+              },
+              {
+                title: "feature 6",
+                available: false,
+              },
+            ],
+          },
+          {
+            pinned: false,
+            title: "Complète",
+            price: {
+              monthly: "29,99",
+              yearly: "199,99",
+            },
+            features: [
+              {
+                title: "feature 1",
+                available: true,
+              },
+              {
+                title: "feature 2",
+                available: true,
+              },
+              {
+                title: "feature 3",
+                available: true,
+              },
+              {
+                title: "feature 4",
+                available: true,
+              },
+              {
+                title: "feature 5",
+                available: true,
+              },
+              {
+                title: "feature 6",
+                available: true,
+              },
+            ],
+          },
+        ];
+        return (
+          <main>
+            <section>
+              <h1>Essayer, c'est l'adopter</h1>
+              <p>Choisis l'offre adaptée à tes besoins</p>
+              <ul className="cards">
+                {cards.map((card, index) => {
+                  return <Card key={index} card={card} monthlyMode={true} />;
+                })}
+              </ul>
+              <h3>https://dribbble.com/shots/19002771-Pricing-Page-Oniex</h3>
+            </section>
+          </main>
+        );
+      }
+      ReactDOM.render(<App />, document.getElementById("root"));
+    </script>
+  </body>
+</html>

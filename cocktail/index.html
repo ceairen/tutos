@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cocktail</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: #24262d;
+        color: white;
+      }
+      main {
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .cocktail {
+        --cocktail-width: 200px;
+        --cocktail-border-size: 2px;
+        --cocktail-border-color: rgb(219, 219, 219);
+        --cocktail-border: var(--cocktail-border-size) solid
+          var(--cocktail-border-color);
+        --cocktail-shadow: 0px 0px 10px 2px #d61cc0;
+        --cocktail-jus-shadow: 0px 0px 10px 2px #db6821;
+        position: flex;
+        flex-direction: column;
+        width: var(--cocktail-width);
+      }
+      .cocktail > li {
+        --before-margin: calc(0px - var(--cocktail-border-size) / 2);
+        width: 100%;
+        position: relative;
+      }
+      .cocktail > li.bord {
+        height: calc(var(--cocktail-width) / 4);
+        box-shadow: var(--cocktail-shadow);
+      }
+      .cocktail > li.bord,
+      .cocktail > li.bord::before {
+        border-radius: 100%;
+        border: var(--cocktail-border);
+      }
+      li.bord::before {
+        content: "";
+        position: absolute;
+        left: var(--before-margin);
+        top: var(--before-margin);
+        right: var(--before-margin);
+        bottom: var(--before-margin);
+        box-shadow: inset var(--cocktail-shadow);
+      }
+      li.contenant {
+        height: var(--cocktail-width);
+        transform: scale(0.7) translateY(-80%) rotate(-45deg);
+      }
+      li.contenant::before,
+      li.contenant::after {
+        --locale-margin: calc(var(--cocktail-border-size) * 2);
+        content: "";
+        position: absolute;
+        left: calc(0px - var(--locale-margin) / 2);
+        top: calc(0px - var(--locale-margin) / 2);
+        width: var(--locale-margin);
+        height: 100%;
+        background-color: var(--cocktail-border-color);
+        box-shadow: var(--cocktail-shadow);
+        border-radius: var(--locale-margin);
+      }
+      li.contenant::after {
+        transform-origin: bottom;
+        transform: rotate(90deg);
+      }
+      li.pied::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: calc(50% - var(--cocktail-border-size) / 2);
+        width: calc(var(--cocktail-width) / 1.8);
+        height: var(--cocktail-border-size);
+        z-index: -1;
+        background-color: var(--cocktail-border-color);
+        box-shadow: var(--cocktail-shadow);
+        transform: rotate(-90deg);
+        transform-origin: left;
+      }
+      .cocktail > li.support,
+      .cocktail > li.jus {
+        --support-width: 50%;
+        width: var(--support-width);
+        height: calc(var(--cocktail-width) / 10);
+        box-shadow: var(--cocktail-shadow);
+        margin: 5px auto 0 auto;
+      }
+      .cocktail > li.support,
+      .cocktail > li.support::before,
+      .cocktail > li.jus,
+      .cocktail > li.jus::before {
+        border-radius: 100%;
+        border: var(--cocktail-border);
+      }
+      li.support::before,
+      li.jus::before {
+        content: "";
+        position: absolute;
+        left: var(--before-margin);
+        top: var(--before-margin);
+        right: var(--before-margin);
+        bottom: var(--before-margin);
+        box-shadow: inset var(--cocktail-shadow);
+      }
+      li.jus {
+        --jus-width: 90px;
+        position: absolute !important;
+        width: var(--jus-width) !important;
+        left: calc(50% - var(--jus-width) / 2);
+        transform: translateY(5px);
+        box-shadow: var(--cocktail-jus-shadow) !important;
+      }
+      li.jus::before {
+        box-shadow: inset var(--cocktail-jus-shadow) !important;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <ul class="cocktail">
+        <li class="bord"></li>
+        <li class="jus"></li>
+        <li class="contenant"></li>
+        <li class="pied"></li>
+        <li class="support"></li>
+      </ul>
+    </main>
+  </body>
+</html>

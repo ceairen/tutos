@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Score</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&display=swap");
+      * {
+        box-sizing: border-box;
+        font-family: "Roboto Slab", serif;
+        transition: all 0.3s;
+      }
+      body {
+        --main-color: #24262d;
+        margin: 0;
+        padding: 0;
+        background-color: var(--main-color);
+        color: white;
+      }
+      main {
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      input {
+        outline: none;
+      }
+      .app {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+      .score {
+        --score-size: 200px;
+        width: var(--score-size);
+        height: var(--score-size);
+        display: flex;
+        flex-direction: column;
+        border-radius: 50%;
+        overflow: hidden;
+      }
+      .score > li {
+        width: 100%;
+        height: 50%;
+        position: relative;
+        overflow: hidden;
+      }
+      .score > li:nth-child(1) {
+        background: linear-gradient(
+          90deg,
+          rgba(252, 218, 44, 1) 6%,
+          rgba(184, 77, 153, 1) 47%,
+          rgba(117, 231, 196, 1) 92%
+        );
+      }
+      .scoreBar {
+        position: absolute;
+        width: var(--score-size);
+        height: var(--score-size);
+        background-color: #eee;
+        transform-origin: bottom;
+        transform: rotate(0deg);
+        left: 0;
+        bottom: 0;
+      }
+      .score > li:nth-child(1)::before {
+        --bar-size: 20px;
+        --b-size: calc(var(--score-size) - var(--bar-size));
+        content: "";
+        position: absolute;
+        background-color: var(--main-color);
+        width: var(--b-size);
+        height: var(--b-size);
+        z-index: 999;
+        border-radius: 50%;
+        left: calc(50% - var(--b-size) / 2);
+        bottom: calc(0px - var(--b-size) / 2);
+      }
+      .score > li:nth-child(2) {
+        z-index: 999;
+        background-color: var(--main-color);
+      }
+      .score > li:nth-child(1) > label {
+        position: absolute;
+        z-index: 9990999;
+        display: block;
+        left: 0;
+        text-align: center;
+        right: 0;
+        bottom: 0;
+        font-size: 2em;
+        transform: translateY(8px);
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div class="app">
+        <ul class="score">
+          <li>
+            <div class="scoreBar"></div>
+            <label class="scoreValue">0%</label>
+          </li>
+          <li></li>
+        </ul>
+        <input
+          type="range"
+          id="score"
+          name="score"
+          min="0"
+          max="100"
+          value="0"
+        />
+      </div>
+    </main>
+    <script>
+      (function () {
+        const scoreElt = document.querySelector("#score");
+        const scoreBar = document.querySelector(".scoreBar");
+        const scoreValue = document.querySelector(".scoreValue");
+        scoreElt.addEventListener(
+          "change",
+          function (e) {
+            const target = e.currentTarget;
+            const value = target.value;
+            const rotateValue = 180 / (100 / value);
+            scoreBar.style.transform = `rotate(${rotateValue}deg)`;
+            scoreValue.textContent = `${value}%`;
+          },
+          false
+        );
+      })();
+    </script>
+  </body>
+</html>
