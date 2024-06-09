@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Timeline</title>
+    <script
+      src="https://unpkg.com/react@17/umd/react.development.js"
+      crossorigin
+    ></script>
+    <script
+      src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"
+      crossorigin
+    ></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap");
+      * {
+        box-sizing: border-box;
+        font-family: "Quicksand", sans-serif;
+      }
+      body {
+        --main-color: #0d0d0c;
+        --seconday-color: #1c1c1c;
+        --violet-color: #7a5ff0;
+        --main-gradient: linear-gradient(90deg, #35c4ff 0%, #b24eff 100%);
+        margin: 0;
+        padding: 0;
+        background-color: var(--main-color);
+        color: white;
+      }
+      main {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+      }
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        position: relative;
+      }
+      body::before {
+        content: "";
+        position: absolute;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        background-color: var(--seconday-color);
+        width: 50%;
+      }
+      .timeline {
+        --separator-border-size: 2px;
+        width: 100%;
+      }
+      .timeline > h1 {
+        text-align: center;
+        position: relative;
+        z-index: 999;
+      }
+      .timeline > h1 > span {
+        background: var(--main-gradient);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        display: inline-block;
+        position: relative;
+      }
+      hr {
+        border: none;
+        height: 3px;
+        background: linear-gradient(
+          90deg,
+          rgba(255, 255, 255, 0.03) 10%,
+          var(--violet-color) 50%,
+          rgba(255, 255, 255, 0.03) 90%
+        );
+        opacity: 0.7;
+        margin: 15px 0;
+        width: 30%;
+        margin: 35px auto;
+      }
+      .timeline > ul {
+        display: flex;
+        flex-direction: column;
+      }
+      .timelineElement {
+        display: flex;
+        transform: translateY(-20px);
+        z-index: 999;
+      }
+      .timelineElement.directionLeft {
+        flex-direction: row-reverse;
+      }
+      .timelineElement > div {
+        width: 50%;
+        padding: 30px;
+        position: relative;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+      }
+      .directionRight > div:first-child,
+      .directionLeft > div:last-child {
+        justify-content: right;
+        text-align: right;
+      }
+      .directionRight > div:first-child::after,
+      .directionLeft > div:last-child::after {
+        --separator-size: 10px;
+        content: "";
+        position: absolute;
+        width: var(--separator-size);
+        height: var(--separator-size);
+        border: var(--separator-border-size) solid var(--violet-color);
+        background-color: var(--main-color);
+        right: calc(
+          0px - (var(--separator-size) + var(--separator-border-size)) / 2
+        );
+        top: calc(
+          50% - (var(--separator-size) + var(--separator-border-size)) / 2
+        );
+        transform: rotate(45deg);
+        z-index: 9;
+      }
+      .timeline > ul::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        background-color: var(--violet-color);
+        width: var(--separator-border-size);
+        left: calc(50% - (var(--separator-border-size)));
+      }
+      .dateElement {
+        color: rgba(255, 255, 255, 0.5);
+        font-size: 0.9em;
+      }
+      .timeline > h1 > span::before,
+      .timeline > h1 > span::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 50%;
+        transform-origin: top;
+      }
+      .timeline > h1 > span::before {
+        background-color: var(--seconday-color);
+        right: 0;
+      }
+      .timeline > h1 > span::after {
+        background-color: var(--main-color);
+        left: 0;
+      }
+      .timeline > h1 > span::before,
+      .timeline > h1 > span::after {
+        animation: 0.6s linear scaleTop forwards;
+      }
+      @keyframes scaleTop {
+        from {
+          transform: scaleY(1);
+        }
+        to {
+          transform: scaleY(0);
+        }
+      }
+      hr {
+        transform: scale(0);
+        animation: 0.6s 0.3s linear scaleZ forwards;
+      }
+      @keyframes scaleZ {
+        from {
+          transform: scale(0);
+        }
+        to {
+          transform: scaleY(1);
+        }
+      }
+      .timeline > ul::after {
+        transform-origin: top;
+        opacity: 0;
+        animation: 0.3s linear scaleTopReverse forwards;
+      }
+      @keyframes scaleTopReverse {
+        0% {
+          opacity: 0;
+          transform: scaleY(0);
+        }
+        20% {
+          opacity: 1;
+          transform: scaleY(0);
+        }
+        100% {
+          opacity: 1;
+          transform: scaleY(1);
+        }
+      }
+      .timelineElement {
+        opacity: 0;
+      }
+      .timelineElement:nth-child(1) {
+        animation: 0.5s 0.3s linear comeOnBottom forwards;
+      }
+      .timelineElement:nth-child(2) {
+        animation: 0.5s 0.4s linear comeOnBottom forwards;
+      }
+      .timelineElement:nth-child(3) {
+        animation: 0.5s 0.5s linear comeOnBottom forwards;
+      }
+      .timelineElement:nth-child(4) {
+        animation: 0.5s 0.6s linear comeOnBottom forwards;
+      }
+      .timelineElement:nth-child(5) {
+        animation: 0.5s 0.7s linear comeOnBottom forwards;
+      }
+      @keyframes comeOnTop {
+        0% {
+          opacity: 0;
+          transform: translateY(-20px);
+        }
+        20% {
+          opacity: 1;
+          transform: translateY(-20px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0px);
+        }
+      }
+      @keyframes comeOnBottom {
+        0% {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        20% {
+          opacity: 1;
+          transform: translateY(20px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0px);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/babel">
+      function Timeline() {
+        const timeline = [
+          {
+            content: "Lorem ipsum dolor sit",
+            date: "8 juin",
+          },
+          {
+            content: "Amet consectetur adipisicing elit",
+            date: "4 juin",
+          },
+          {
+            content:
+              "Repudiandae delectus error at temporibus, pariatur inventore aliquam facilis.",
+            date: "2 juin",
+          },
+          {
+            content: "Repellat, possimus at!",
+            date: "27 mai",
+          },
+          {
+            content: "Nemo expedita laudantium molestias eius?",
+            date: "8 mai",
+          },
+        ];
+        return (
+          <div className="timeline">
+            <h1>
+              Nos <br />
+              <span>réalisations</span>
+            </h1>
+            <hr />
+            <ul>
+              {timeline.map(({ content, date }, i) => {
+                return (
+                  <li
+                    className={`timelineElement ${
+                      i % 2 === 0 ? "directionRight" : "directionLeft"
+                    }`}
+                    key={i}
+                  >
+                    <div className="dateElement">
+                      <label>{date}</label>
+                    </div>
+                    <div className="contentElement">
+                      <label>{content}</label>
+                    </div>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        );
+      }
+      function App() {
+        return (
+          <main>
+            <Timeline />
+          </main>
+        );
+      }
+      ReactDOM.render(<App />, document.getElementById("root"));
+    </script>
+  </body>
+</html>

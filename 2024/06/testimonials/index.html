@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pricing</title>
+    <script
+      src="https://unpkg.com/react@17/umd/react.development.js"
+      crossorigin
+    ></script>
+    <script
+      src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"
+      crossorigin
+    ></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap");
+      * {
+        box-sizing: border-box;
+        font-family: "Quicksand", sans-serif;
+      }
+      body {
+        --main-color: #0d0d0c;
+        --seconday-color: #1c1c1c;
+        --main-gradient: linear-gradient(90deg, #35c4ff 0%, #b24eff 100%);
+        margin: 0;
+        padding: 0;
+        background-color: var(--main-color);
+        color: white;
+      }
+      main {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+      }
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      :root {
+        --grey-color: #525252;
+        --lightgrey-color: lightgray;
+      }
+      h1,
+      h2 {
+        margin: 0;
+        padding: 0;
+      }
+      section {
+        width: 100%;
+        text-align: center;
+      }
+      section > h1 {
+        font-size: 1.8em;
+      }
+      section > h3 {
+        color: gray;
+        display: none;
+      }
+      section > ul.avatarCarousel {
+        display: flex;
+        justify-content: center;
+      }
+      section > ul.avatarCarousel > li {
+        --li-size: 70px;
+        width: var(--li-size);
+        height: var(--li-size);
+        border-radius: 50%;
+        background: var(--main-gradient);
+        opacity: 0.7;
+      }
+      section > ul.avatarCarousel > li > img {
+        width: 100%;
+        height: 100%;
+        transform: translateY(-5px) scale(1.07);
+      }
+      section > ul.avatarCarousel > li:nth-child(1) {
+        transform: translateX(30px) rotate(-20deg) scale(0.8);
+      }
+      section > ul.avatarCarousel > li:nth-child(2) {
+        z-index: 999;
+        opacity: 1;
+      }
+      section > ul.avatarCarousel > li:nth-child(3) {
+        transform: translateX(-30px) rotate(20deg) scale(0.8);
+      }
+      section > h1 > span {
+        background: var(--main-gradient);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+      section > label {
+        background-color: var(--seconday-color);
+        font-size: 0.6em;
+        font-weight: bold;
+        padding: 5px 15px;
+        border-radius: 20px;
+        display: inline-block;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        margin: 25px 0;
+      }
+      .testimonials {
+        margin-top: 40px;
+      }
+      .testimonials > ul {
+        display: block;
+        white-space: nowrap;
+        overflow: hidden;
+        padding: 0 5px;
+        margin: 10px 0;
+      }
+      .testimonials > ul > li {
+        display: inline-block;
+        width: calc(100% / 3 - 10px);
+      }
+      .testimonialCard {
+        background-color: #131313;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        padding: 16px;
+        margin: 0 5px;
+      }
+      .testimonialCard > ul {
+        display: flex;
+        align-items: center;
+      }
+      .testimonialCard > ul img {
+        width: 50px;
+        height: 50px;
+      }
+      .testimonialCard > ul > li:nth-child(2) {
+        margin-left: 10px;
+      }
+      .testimonialCard > ul > li:nth-child(2) > label {
+        display: block;
+        font-size: 0.9em;
+        font-weight: bold;
+        text-align: left;
+      }
+      .testimonialCard > ul > li:nth-child(2) > em {
+        display: block;
+        font-size: 0.6em;
+        font-weight: bold;
+        text-align: left;
+        font-style: normal;
+        opacity: 0.5;
+      }
+      .testimonialCard > p {
+        width: 100%;
+        white-space: wrap;
+        text-align: left;
+        font-size: 0.7em;
+        font-weight: bold;
+        color: grey;
+      }
+      .testimonialCarrousel > li.left {
+        animation: translateLeft 30s linear infinite;
+      }
+      .testimonialCarrousel > li.right {
+        animation: translateRight 30s linear infinite;
+      }
+      .testimonialCarrousel > li.right {
+        transform: translateX(-100vw);
+      }
+      @keyframes translateLeft {
+        from {
+          transform: translateX(0);
+        }
+        to {
+          transform: translateX(-100vw);
+        }
+      }
+      @keyframes translateRight {
+        from {
+          transform: translateX(-100vw);
+        }
+        to {
+          transform: translateX(0);
+        }
+      }
+      .testimonialCarrousel {
+        position: relative;
+      }
+      .testimonialCarrousel::after,
+      .testimonialCarrousel::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        width: 25%;
+        z-index: 9999;
+      }
+      .testimonialCarrousel::before {
+        background: linear-gradient(
+          90deg,
+          rgba(13, 13, 12, 1) 0%,
+          rgba(253, 187, 45, 0) 100%
+        );
+        left: 0;
+        pointer-events: none;
+      }
+      .testimonialCarrousel::after {
+        right: 0;
+        background: linear-gradient(
+          270deg,
+          rgba(13, 13, 12, 1) 0%,
+          rgba(253, 187, 45, 0) 100%
+        );
+      }
+      section > h3 {
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/babel">
+      function Carousel({ directionLeft }) {
+        const testimonial = {
+          name: "John Doe",
+          mention: "@johndoe",
+          content:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris",
+        };
+        return (
+          <ul className="testimonialCarrousel">
+            {[...Array(6).keys()].map((index) => {
+              return (
+                <li
+                  className={`testimonialCard ${
+                    directionLeft ? "left" : "right"
+                  }`}
+                  key={index}
+                >
+                  <ul>
+                    <li>
+                      <img src="./avatar2.svg" />
+                    </li>
+                    <li>
+                      <label>{testimonial.name}</label>
+                      <em>{testimonial.mention}</em>
+                    </li>
+                  </ul>
+                  <p>{testimonial.content}</p>
+                </li>
+              );
+            })}
+          </ul>
+        );
+      }
+      function App() {
+        return (
+          <main>
+            <section>
+              <ul className="avatarCarousel">
+                <li>
+                  <img src="./avatar3.svg" />
+                </li>
+                <li>
+                  <img src="./avatar2.svg" />
+                </li>
+                <li>
+                  <img src="./avatar1.svg" />
+                </li>
+              </ul>
+              <label>Testimonials</label>
+              <h1>
+                Ce que les clients disent
+                <br />
+                de <span>notre application</span>
+              </h1>
+              <div className="testimonials">
+                <Carousel directionLeft={true} />
+                <Carousel directionLeft={false} />
+              </div>
+              <h3>https://dribbble.com/shots/21645756-Testimonials-section</h3>
+            </section>
+          </main>
+        );
+      }
+      ReactDOM.render(<App />, document.getElementById("root"));
+    </script>
+  </body>
+</html>
