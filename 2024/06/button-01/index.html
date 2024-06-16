@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Button</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap");
+      * {
+        box-sizing: border-box;
+        font-family: "Quicksand", sans-serif;
+        transition: all 0.3s;
+      }
+      button {
+        outline: none;
+        border: none;
+        cursor: pointer;
+      }
+      body {
+        --main-color: #0d0d0c;
+        --seconday-color: #1c1c1c;
+        --violet-color: #7a5ff0;
+        margin: 0;
+        padding: 0;
+        background-color: var(--main-color);
+        color: white;
+      }
+      main {
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      button {
+        --button-radius: 50px;
+        --button-border-color: #696969;
+        --right-element-size: 35px;
+        --vertical-padding: 14px;
+        --horitonzal-padding: 0px;
+        --button-padding: var(--vertical-padding) var(--horitonzal-padding);
+        font-weight: bold;
+        background: linear-gradient(
+          90deg,
+          rgb(79, 51, 191) 32%,
+          rgba(122, 95, 240, 1) 78%
+        );
+        padding: var(--button-padding);
+        padding-left: calc(
+          var(--horitonzal-padding) + var(--right-element-size)
+        );
+        color: white;
+        position: relative;
+        border: 1px solid var(--button-border-color);
+        border-right-color: transparent;
+        font-size: 1.1em;
+        border-bottom-left-radius: var(--button-radius);
+        border-top-left-radius: var(--button-radius);
+      }
+      button::after,
+      button::before {
+        content: "";
+        position: absolute;
+        top: -1px;
+        right: calc(-1px - var(--right-element-size));
+        bottom: -1px;
+        background-color: var(--violet-color);
+        width: var(--right-element-size);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: transform 0.3s, opacity 0.3s;
+        border: 1px solid var(--button-border-color);
+        border-left-color: transparent;
+        font-size: 1.2em;
+        border-bottom-right-radius: var(--button-radius);
+        border-top-right-radius: var(--button-radius);
+      }
+      button::before {
+        transform: translateY(0%);
+        opacity: 1;
+      }
+      button::after {
+        content: "»";
+        opacity: 0;
+        transform: translateY(100%);
+      }
+      button:hover::before {
+        transform: translateY(-100%);
+        opacity: 0;
+      }
+      button:hover::after {
+        transform: translateY(0%);
+        opacity: 1;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <button>Se connecter</button>
+    </main>
+  </body>
+</html>

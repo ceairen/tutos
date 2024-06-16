@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Notifications</title>
+    <script
+      src="https://unpkg.com/react@17/umd/react.development.js"
+      crossorigin
+    ></script>
+    <script
+      src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"
+      crossorigin
+    ></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap");
+      * {
+        box-sizing: border-box;
+        font-family: "Quicksand", sans-serif;
+      }
+      button {
+        background-color: transparent;
+        outline: none;
+        color: white;
+        border: none;
+        cursor: pointer;
+      }
+      h1,
+      h2,
+      h3,
+      h4,
+      p {
+        padding: 0;
+        margin: 0;
+      }
+      body {
+        --main-color: #050505;
+        --scnd-color: #282828;
+        --thrd-color: rgb(172, 172, 172);
+        --main-gradient: linear-gradient(90deg, #35c4ff 0%, #b24eff 100%);
+        --nav-height: 60px;
+        margin: 0;
+        padding: 0;
+        background-color: var(--main-color);
+        color: white;
+      }
+      main {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+      }
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      nav {
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        height: var(--nav-height);
+        background-color: #171717;
+      }
+      nav > ul {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        height: 100%;
+      }
+      nav > ul > li {
+        height: 100%;
+        position: relative;
+      }
+      nav > ul > li:nth-child(1),
+      nav > ul > li:nth-child(3) {
+        width: 25%;
+      }
+      nav > ul > li:nth-child(2) {
+        width: 50%;
+      }
+      .nav-actions {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        padding: 0 15px;
+      }
+      button {
+        height: 35px;
+        width: 60px;
+        border-radius: 5px;
+        padding: 5px 0;
+      }
+      button:not(.logo):hover,
+      button.selected {
+        background-color: var(--scnd-color);
+      }
+      button > img {
+        height: 100%;
+      }
+      button.logo {
+        height: 45px;
+      }
+      nav > ul > li:nth-child(2)::after {
+        --element-margins: 10px;
+        content: "";
+        position: absolute;
+        top: var(--element-margins);
+        left: var(--element-margins);
+        bottom: var(--element-margins);
+        right: var(--element-margins);
+        background-color: var(--scnd-color);
+        border-radius: 5px;
+      }
+      .notification-bar {
+        --element-margins: 12px;
+        position: fixed;
+        top: calc(var(--element-margins) + var(--nav-height));
+        right: var(--element-margins);
+        bottom: var(--element-margins);
+        background-color: #181818;
+        width: 500px;
+        border-radius: 10px;
+        transition: transform 0.5s cubic-bezier(0.76, 0.21, 0.27, 0.88);
+        overflow: auto;
+      }
+      .notification-bar.close {
+        transform: translateX(calc(100% + var(--element-margins) * 3))
+          scale(1.1);
+      }
+      .notification-bar.open {
+        transform: translateX(0) scale(1);
+      }
+      .notification-header,
+      .notification-box {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px;
+        border-bottom: 1px solid var(--scnd-color);
+      }
+      .notification-header > h3 {
+        font-size: 1.1em;
+      }
+      .notification-header > button {
+        display: flex;
+        width: 140px;
+        align-items: center;
+        justify-content: space-around;
+        color: var(--thrd-color);
+      }
+      .notification-header > button,
+      .notification-box > button:not(.selected) {
+        color: var(--thrd-color);
+      }
+      .notification-box {
+        justify-content: flex-start;
+      }
+      button.badgeButton {
+        margin-right: 20px;
+        font-weight: bold !important;
+        padding: 0 10px;
+        display: flex;
+        align-items: center;
+        width: inherit;
+      }
+      button.badgeButton > span {
+        background-color: rgb(255, 255, 255, 0.1);
+        padding: 2px 6px;
+        border-radius: 3px;
+        margin-left: 8px;
+      }
+      button.badgeButton.selected > span {
+        background-color: #b24eff;
+      }
+      .header {
+        display: flex;
+        align-items: center;
+        padding: 30px 30px 0px 30px;
+      }
+      .avatar {
+        margin-right: 15px;
+      }
+      .avatar > span {
+        --a-size: 45px;
+        display: flex;
+        width: var(--a-size);
+        height: var(--a-size);
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+        font-weight: bold;
+      }
+      .contentHeader > p {
+        color: var(--thrd-color);
+        font-size: 0.8em;
+        width: 100%;
+        text-align: left;
+      }
+      .contentHeader > label > b {
+        margin-right: 4px;
+        color: white;
+      }
+      .notifications-list > li {
+        border-left: 2px solid transparent;
+        border-bottom: 1px solid var(--scnd-color) !important;
+      }
+      .notifContent {
+        background-color: #232323;
+        margin-left: 90px;
+        margin-right: 30px;
+        border-radius: 10px;
+        padding: 30px;
+        margin-top: 15px;
+        margin-bottom: 30px;
+      }
+      .notifContentHeader {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+      }
+      .notifContentHeader > img {
+        width: 25px;
+        height: 30px;
+        border: 1px solid rgba(255, 255, 255, 0.7);
+        padding: 4px;
+        border-top-right-radius: 10px;
+        margin-bottom: 10px;
+      }
+      .animatedComeOn {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      .notification-bar.open .animatedComeOn {
+        animation: comeOn 0.3s 0s linear forwards;
+      }
+      .animatedComeOn.child1 {
+        animation-delay: 0.3s !important;
+      }
+      .animatedComeOn.child2 {
+        animation-delay: 0.4s !important;
+      }
+      .animatedComeOn.child3 {
+        animation-delay: 0.5s !important;
+      }
+      .animatedComeOn.child4 {
+        animation-delay: 0.6s !important;
+      }
+      @keyframes comeOn {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/babel">
+      const { useState } = React;
+      function BadgeButton({ text, number, selected }) {
+        return (
+          <button className={`${selected ? "selected" : ""} badgeButton`}>
+            {text} <span>{number}</span>
+          </button>
+        );
+      }
+      function NotificationContent({ content }) {
+        const { icon, type, title } = content;
+        return (
+          <>
+            <div className="notifContentHeader">
+              {icon !== null && <img src={`./${icon}.svg`} />}
+              <label>{title}</label>
+            </div>
+          </>
+        );
+      }
+      function Notifications() {
+        const notifs = [
+          {
+            from: { name: "John Doe", color: "#35c4ff" },
+            title: "asked you to join Ease Design System",
+            when: "1 hour ago",
+            content: {
+              icon: "figma",
+              type: "file",
+              title: "EaseDesignSystem.fig",
+            },
+          },
+          {
+            from: { name: "Dohn Joe", color: "#b24eff" },
+            title: "mentionned you in Ease Design Master",
+            when: "6 hour ago",
+            content: {
+              icon: null,
+              type: "comment",
+              title: "Lorem Ipsum blablabla",
+            },
+          },
+        ];
+        function resolveInitials(name) {
+          return `${name.split(" ")[0][0]}${name.split(" ")[1][0]}`;
+        }
+        return (
+          <ul className="notifications-list">
+            {notifs.map(({ from, title, when, content }, index) => {
+              return (
+                <li
+                  className={`animatedComeOn child${3 + index}`}
+                  key={index}
+                  style={{ borderColor: from.color }}
+                >
+                  <div className="header">
+                    <div className="avatar">
+                      <span style={{ backgroundColor: from.color }}>
+                        {resolveInitials(from.name)}
+                      </span>
+                    </div>
+                    <div className="content">
+                      <div className="contentHeader">
+                        <label>
+                          <b>{from.name}</b>
+                          {title}
+                        </label>
+                        <p>{when}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="notifContent">
+                    <NotificationContent content={content} />
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
+        );
+      }
+
+      function App() {
+        const [open, setOpen] = useState(true);
+        return (
+          <>
+            <nav>
+              <ul>
+                <li></li>
+                <li></li>
+                <li className="nav-actions">
+                  <button>
+                    <img src="./home.svg" alt="" />
+                  </button>
+                  <button
+                    className={`${open ? "selected" : ""}`}
+                    onClick={() => setOpen((open) => !open)}
+                  >
+                    <img src="./bell.svg" alt="" />
+                  </button>
+                  <button className="logo">
+                    <img src="./logo.svg" alt="" />
+                  </button>
+                </li>
+              </ul>
+            </nav>
+            <main>
+              <div className={`notification-bar ${open ? "open" : "close"}`}>
+                <div className="notification-header animatedComeOn child1">
+                  <h3>Notifications</h3>
+                  <button>
+                    <img src="./check.svg" alt="" /> Mark all as read
+                  </button>
+                </div>
+                <div className="notification-box animatedComeOn child2">
+                  <BadgeButton text="Inbox" number="3" />
+                  <BadgeButton text="Team" number="8" selected />
+                </div>
+                <div className="notification-content">
+                  <Notifications />
+                </div>
+              </div>
+            </main>
+          </>
+        );
+      }
+      ReactDOM.render(<App />, document.getElementById("root"));
+    </script>
+  </body>
+</html>
