@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Search</title>
+    <script
+      src="https://unpkg.com/react@17/umd/react.development.js"
+      crossorigin
+    ></script>
+    <script
+      src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"
+      crossorigin
+    ></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap");
+      * {
+        box-sizing: border-box;
+        font-family: "Quicksand", sans-serif;
+      }
+      button {
+        background-color: transparent;
+        outline: none;
+        color: white;
+        border: none;
+        cursor: pointer;
+      }
+      h1,
+      h2,
+      h3,
+      h4,
+      p {
+        padding: 0;
+        margin: 0;
+      }
+      body {
+        --main-color: #9465b3;
+        --scnd-color: #282828;
+        --thrd-color: rgb(172, 172, 172);
+        --main-gradient: linear-gradient(90deg, #35c4ff 0%, #b24eff 100%);
+        --nav-height: 60px;
+        margin: 0;
+        padding: 0;
+        background-color: var(--main-color);
+        color: white;
+      }
+      main {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .SearchInput,
+      .SearchInput > button {
+        transition: all 0.6s cubic-bezier(0.76, 0.21, 0.27, 0.88);
+      }
+      .SearchInput {
+        --btn-size: 70px;
+        background-color: #855ba1;
+        border-radius: var(--btn-size);
+        display: flex;
+        width: var(--btn-size);
+        justify-content: flex-start;
+        align-items: center;
+      }
+      .SearchInput.active {
+        width: 350px;
+        border-radius: 12px;
+      }
+      .SearchInput > button {
+        width: var(--btn-size);
+        height: var(--btn-size);
+        border-radius: 50%;
+        background: linear-gradient(145deg, #855ba1, #9e6cc0);
+        box-shadow: 5px 5px 10px #7e5698, -5px -5px 10px #aa74ce;
+      }
+      .SearchInput > button:hover {
+        background: linear-gradient(145deg, #855ba1, #9e6cc0);
+        box-shadow: 15px 15px 30px #76518f, -15px -15px 30px #b279d7;
+      }
+      .SearchInput > button > img {
+        width: 100%;
+        height: 100%;
+        transform: scale(0.8) rotate(90deg);
+      }
+      .SearchInput.active > button {
+        transform: scale(0.8) rotate(-90deg);
+        background: transparent;
+        box-shadow: none;
+      }
+      .SearchInput > input {
+        width: calc(100% - var(--btn-size) - 15px);
+        height: var(--btn-size);
+        border: none;
+        background-color: transparent;
+        color: white;
+        outline: none;
+        font-weight: bold;
+        font-size: 1.3em;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/babel">
+      const { useState, useEffect, useRef } = React;
+      function App() {
+        const [active, setActive] = useState(false);
+        const inputRef = useRef();
+        useEffect(() => {
+          if (active) {
+            const { current } = inputRef;
+            current.focus();
+          }
+        }, [active]);
+        return (
+          <main>
+            <div className={`SearchInput ${active ? "active" : ""}`}>
+              <button onClick={() => setActive((active) => !active)}>
+                <img src="./search.svg" />
+              </button>
+              {active && <input ref={inputRef} type="text" />}
+            </div>
+          </main>
+        );
+      }
+      ReactDOM.render(<App />, document.getElementById("root"));
+    </script>
+  </body>
+</html>

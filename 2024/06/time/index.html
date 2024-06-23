@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Typing</title>
+    <script
+      src="https://unpkg.com/react@17/umd/react.development.js"
+      crossorigin
+    ></script>
+    <script
+      src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"
+      crossorigin
+    ></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap");
+      * {
+        box-sizing: border-box;
+        font-family: "Orbitron", sans-serif;
+      }
+      .writtedText {
+        margin-left: 40%;
+      }
+      body {
+        --main-color: #0d0d0c;
+        --seconday-color: #1c1c1c;
+        --main-gradient: linear-gradient(90deg, #35c4ff 0%, #b24eff 100%);
+        margin: 0;
+        padding: 0;
+        background-color: var(--main-color);
+        color: white;
+      }
+      main {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+      }
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .timeSliderContainer {
+        --slider-container-height: 80px;
+        display: flex;
+        font-weight: bold;
+        background-color: rgba(255, 255, 255, 0.03);
+        height: var(--slider-container-height);
+        border-radius: var(--slider-container-height);
+      }
+      .timeSlider > li {
+        --li-size: var(--slider-container-height);
+        display: flex;
+        width: var(--li-size);
+        height: var(--li-size);
+        font-size: 1.5em;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s;
+      }
+      .timeSlider {
+        transition: transform 0.3s;
+      }
+      .timeSlider.separator > li {
+        width: 5px;
+        color: #c389f0;
+        font-size: 1.7em;
+        transform: translateY(-2px);
+      }
+      .timeSlider > li:not(.active) {
+        opacity: 0.2;
+        transform: scale(0.6);
+      }
+      .timeslider > li.active {
+        opacity: 1;
+        transform: scale(1);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/babel">
+      const { useState, useEffect } = React;
+      function TimeList({ max, value }) {
+        const [translate, setTranslate] = useState(0);
+        useEffect(() => {
+          const translateValue = 0 - 80 * parseInt(value);
+          setTranslate(translateValue);
+        }, [value]);
+        return (
+          <ul
+            className="timeSlider"
+            style={{ transform: `translateY(${translate}px)` }}
+          >
+            {Array.from({ length: parseInt(max) }).map((e, i) => {
+              return (
+                <li
+                  key={i}
+                  className={`${parseInt(value) === i ? "active" : ""}`}
+                >
+                  {i < 10 ? `0${i}` : i}
+                </li>
+              );
+            })}
+          </ul>
+        );
+      }
+      function TimeListSeparator() {
+        return (
+          <ul className="timeSlider separator">
+            <li className="active">:</li>
+          </ul>
+        );
+      }
+      function Time() {
+        const [hours, setHours] = useState("00");
+        const [minutes, setMinutes] = useState("00");
+        const [seconds, setSeconds] = useState("00");
+        useEffect(() => {
+          const interval = setInterval(() => {
+            const date = new Date();
+            setHours(String(date.getHours()).padStart(2, "0"));
+            setMinutes(String(date.getMinutes()).padStart(2, "0"));
+            setSeconds(String(date.getSeconds()).padStart(2, "0"));
+          }, 1000);
+
+          return () => clearInterval(interval);
+        }, []);
+        return (
+          <div className="timeSliderContainer">
+            <TimeList max="24" value={hours} />
+            <TimeListSeparator />
+            <TimeList max="60" value={minutes} />
+            <TimeListSeparator />
+            <TimeList max="60" value={seconds} />
+          </div>
+        );
+      }
+      function App() {
+        return (
+          <main>
+            <Time />
+          </main>
+        );
+      }
+      ReactDOM.render(<App />, document.getElementById("root"));
+    </script>
+  </body>
+</html>

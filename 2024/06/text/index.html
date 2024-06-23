@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Typing</title>
+    <script
+      src="https://unpkg.com/react@17/umd/react.development.js"
+      crossorigin
+    ></script>
+    <script
+      src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"
+      crossorigin
+    ></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap");
+      * {
+        box-sizing: border-box;
+        font-family: "Quicksand", sans-serif;
+      }
+      .writtedText {
+        margin-left: 40%;
+      }
+      body {
+        --main-color: #0d0d0c;
+        --seconday-color: #1c1c1c;
+        --main-gradient: linear-gradient(90deg, #35c4ff 0%, #b24eff 100%);
+        margin: 0;
+        padding: 0;
+        background-color: var(--main-color);
+        color: white;
+      }
+      main {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+      }
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .writtedText {
+        --border-color: #aa74ce;
+        border-right: 3px solid var(--border-color);
+        font-size: 24px;
+        display: flex;
+        padding-right: 5px;
+        font-weight: bold;
+        animation: flash 0.9s step-end infinite;
+        flex-direction: row;
+      }
+
+      .writtedText > li {
+        min-width: 5px;
+        display: inline-block;
+        animation: comeOn 0.2s linear forwards;
+        transform-origin: bottom;
+      }
+
+      @keyframes comeOn {
+        from {
+          transform: scaleY(0);
+        }
+        to {
+          opacity: 1;
+          transform: scaleY(1);
+        }
+      }
+
+      @keyframes flash {
+        0%,
+        100% {
+          border-color: transparent;
+        }
+        50% {
+          border-color: var(--border-color);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/babel">
+      const { useState, useEffect } = React;
+      function WriteText({ text }) {
+        const [displayedText, setDisplayedText] = useState([]);
+        const [index, setIndex] = useState(0);
+
+        useEffect(() => {
+          if (index < text.length) {
+            const t = setTimeout(
+              function () {
+                const newText = [...displayedText, text[index]];
+                console.log(newText);
+                setDisplayedText((displayedText) => newText);
+                setIndex(index + 1);
+              },
+              index % 2 === 0 ? 250 : 150
+            );
+            return () => clearTimeout(t);
+          }
+        }, [index]);
+
+        return (
+          <ul className="writtedText">
+            {displayedText.map((text, index) => {
+              return <li key={index}>{text}</li>;
+            })}
+          </ul>
+        );
+      }
+      function App() {
+        return (
+          <main>
+            <WriteText text="Hello everybody !" />
+          </main>
+        );
+      }
+      ReactDOM.render(<App />, document.getElementById("root"));
+    </script>
+  </body>
+</html>
