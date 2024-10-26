@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Template</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        --main-color: #bfd0cd;
+        margin: 0;
+        padding: 0;
+        background-color: var(--main-color);
+        color: white;
+      }
+      main {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .choss {
+        --choss-size: 615px;
+        --choss-eye-size: 20px;
+        width: var(--choss-size);
+        height: var(--choss-size);
+        border-radius: 50%;
+        border: 10px solid #010305;
+        background-color: #e3c6b5;
+        position: relative;
+        transform: scale(0.6);
+      }
+      .choss-face {
+        width: 100%;
+        height: 200px;
+        margin-top: 30%;
+        display: flex;
+        justify-content: space-evenly;
+        animation: faceAnimation 4s linear infinite;
+      }
+      .choss-face > li {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .choss .eye {
+        width: var(--choss-eye-size);
+        height: var(--choss-eye-size);
+        background-color: #010305;
+        border-radius: 50%;
+      }
+      .choss .mouth {
+        background-color: #010305;
+        width: 30px;
+        height: 10px;
+        border-radius: 30px;
+        position: relative;
+        margin-top: 30px;
+        transform: rotate(-5deg);
+      }
+      .choss .mouth::after {
+        content: "";
+        position: absolute;
+        background-color: #010305;
+        width: 13px;
+        height: 11px;
+        border-radius: 30px;
+        right: -22%;
+        transform-origin: left;
+        transform: rotate(-19deg);
+      }
+      @keyframes faceAnimation {
+        0% {
+          transform: translateX(0) translateY(0);
+        }
+        15% {
+          transform: translateX(60px) translateY(30px);
+        }
+        30% {
+          transform: translateX(60px) translateY(30px);
+        }
+        45% {
+          transform: translateX(-50px) translateY(-90px);
+        }
+        60% {
+          transform: translateX(-50px) translateY(-90px);
+        }
+        70% {
+          transform: translateX(0) translateY(0);
+        }
+        100% {
+          transform: translateX(0) translateY(0);
+        }
+      }
+      .choss-face > li:nth-child(1) > .eye {
+        animation: eyeAnimation 4s linear infinite;
+      }
+      @keyframes eyeAnimation {
+        0% {
+          transform: scaleY(1);
+        }
+        70% {
+          transform: scaleY(1);
+        }
+        71% {
+          transform: scaleY(0.2);
+        }
+        76% {
+          transform: scaleY(1);
+        }
+        81% {
+          transform: scaleY(0.2);
+        }
+        86% {
+          transform: scaleY(1);
+        }
+        100% {
+          transform: scaleY(1);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div class="choss">
+        <ul class="choss-face">
+          <li><div class="eye"></div></li>
+          <li><div class="mouth"></div></li>
+          <li><div class="eye"></div></li>
+        </ul>
+      </div>
+    </main>
+  </body>
+</html>

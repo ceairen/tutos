@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pricing</title>
+    <script
+      src="https://unpkg.com/react@17/umd/react.development.js"
+      crossorigin
+    ></script>
+    <script
+      src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"
+      crossorigin
+    ></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap");
+      * {
+        box-sizing: border-box;
+        font-family: "Quicksand", sans-serif;
+      }
+      body {
+        --main-color: #24262d;
+        --seconday-color: #1c1c1c;
+        --main-gradient: linear-gradient(90deg, #35c4ff 0%, #b24eff 100%);
+        margin: 0;
+        padding: 0;
+        background-color: var(--main-color);
+        color: white;
+      }
+      main {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        width: 40%;
+        margin: auto;
+      }
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .sabre {
+        --box-shadow-color: blue;
+        position: relative;
+        display: flex;
+      }
+      .manche {
+        width: var(--sabre-size);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .manche > li {
+        width: 100%;
+        background-color: #cbcbcb;
+        position: relative;
+      }
+      .manche > li:nth-child(1) {
+        --part-size: 15px;
+        background-color: #f7ba6c;
+        width: var(--part-size);
+        height: 45px;
+      }
+      .manche > li:nth-child(1)::before {
+        --part-child-size: calc(var(--part-size) * 1.5);
+        position: absolute;
+        content: "";
+        width: 0;
+        height: 0;
+        left: -100%;
+        border-left: var(--part-child-size) solid transparent;
+        border-right: var(--part-child-size) solid transparent;
+        border-top: var(--part-child-size) solid #cbcbcb;
+      }
+      .manche > li:nth-child(1)::after {
+        --part-child-size: calc(var(--part-size) * 1.5);
+        position: absolute;
+        content: "";
+        left: -100%;
+        width: calc(var(--part-child-size) * 2);
+        height: 13px;
+        background-color: #f7ba6c;
+        bottom: 0;
+        transform: scaleX(0.8);
+      }
+      .manche > li:nth-child(2) {
+        width: 15px;
+        height: 40px;
+        background-color: #a6a6a6;
+      }
+      .manche > li:nth-child(2) > ul {
+        display: flex;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        flex-direction: column;
+        justify-content: space-around;
+      }
+      .manche > li:nth-child(2) > ul > li {
+        width: 150%;
+        height: 4px;
+        background-color: #7c7878;
+        margin-left: -25%;
+      }
+      .manche > li:nth-child(3) {
+        width: 22px;
+        height: 50px;
+        background-color: #a6a6a6;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        border-top: 4px solid #f7ba6c;
+      }
+      .manche > li:nth-child(3)::after,
+      .manche > li:nth-child(3)::before {
+        content: "";
+        width: 3px;
+        height: 60%;
+        background-color: #7c7878;
+      }
+      .sabre::before {
+        --lame-size: 10px;
+        --lame-height: 300px;
+        content: "";
+        position: absolute;
+        height: var(--lame-height);
+        width: var(--lame-size);
+        background-color: white;
+        top: 0;
+        transform: scaleY(1) translateY(calc(0px - var(--lame-height)));
+        left: calc(50% - var(--lame-size) / 2);
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        box-shadow: 0px 0px 16px 2px var(--box-shadow-color);
+        transition: transform 0.3s, height 0.3s;
+        transform-origin: 100%;
+      }
+      .sabre:not(.open)::before {
+        --lame-height: 240px;
+        transform: scaleY(0) translateY(calc(0px - var(--lame-height)));
+        box-shadow: 0px 0px 6px 2px var(--box-shadow-color);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/babel">
+      function Sabre({ color }) {
+        const [open, setOpen] = React.useState(true);
+        return (
+          <div
+            className={`sabre ${open ? "open" : ""}`}
+            style={{ "--box-shadow-color": color }}
+            onClick={() => setOpen((open) => !open)}
+          >
+            <ul className="manche">
+              <li></li>
+              <li>
+                <ul>
+                  <li></li>
+                  <li></li>
+                  <li></li>
+                  <li></li>
+                </ul>
+              </li>
+              <li></li>
+            </ul>
+          </div>
+        );
+      }
+      function App() {
+        return (
+          <main>
+            <Sabre color={"violet"} />
+          </main>
+        );
+      }
+      ReactDOM.render(<App />, document.getElementById("root"));
+    </script>
+  </body>
+</html>

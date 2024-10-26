@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bourg Palette avec Bordure de Forêt</title>
+    <style>
+      body {
+        --main-color: #0d0d0c;
+        margin: 0;
+        padding: 0;
+        background-color: var(--main-color);
+        color: white;
+      }
+      main {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+      }
+      canvas {
+        background-color: #ffffff;
+        border: 2px solid #000;
+      }
+    </style>
+    <script
+      src="https://unpkg.com/react@17/umd/react.development.js"
+      crossorigin
+    ></script>
+    <script
+      src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"
+      crossorigin
+    ></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module">
+      import {
+        fullMap,
+        TerrainTypes,
+        getColorByTerrainType,
+        unReachableTerrainTypes,
+      } from "./maps.js";
+
+      window.fullMap = fullMap;
+      window.TerrainTypes = TerrainTypes;
+      window.getColorByTerrainType = getColorByTerrainType;
+      window.unReachableTerrainTypes = unReachableTerrainTypes;
+    </script>
+    <script type="text/babel">
+      const tileSize = 32;
+      const viewSize = 11;
+      const characterSize = 18;
+      const moveDuration = 0;
+
+      const characterSprite = new Image();
+      characterSprite.src = "./characters.png";
+
+      const playerStates = {
+        face: { x: 17, y: 0 },
+        face_move: { x: 0, y: 0 },
+        back: { x: 68, y: 0 },
+        back_move: { x: 51, y: 0 },
+        left: { x: 102, y: 0 },
+        left_move: { x: 120, y: 0 },
+        right: { x: 136, y: 0 },
+        right_move: { x: 153, y: 0 },
+      };
+
+      const mapData = fullMap;
+
+      function BourgPalette() {
+        const canvasRef = React.useRef(null);
+        const [playerPosition, setPlayerPosition] = React.useState({
+          x: 5,
+          y: 5,
+        });
+        const [playerState, setPlayerState] = React.useState("face");
+        const [isMoving, setIsMoving] = React.useState(false);
+
+        React.useEffect(() => {
+          const canvas = canvasRef.current;
+          const ctx = canvas.getContext("2d");
+
+          function drawMap() {
+            const offsetX = playerPosition.x - Math.floor(viewSize / 2);
+            const offsetY = playerPosition.y - Math.floor(viewSize / 2);
+
+            for (let y = 0; y < viewSize; y++) {
+              for (let x = 0; x < viewSize; x++) {
+                const mapX = x + offsetX;
+                const mapY = y + offsetY;
+
+                if (
+                  mapX < 0 ||
+                  mapX >= mapData[0].length ||
+                  mapY < 0 ||
+                  mapY >= mapData.length
+                ) {
+                  ctx.fillStyle = getColorByTerrainType(TerrainTypes.FOREST);
+                } else {
+                  const tileType = mapData[mapY][mapX];
+                  ctx.fillStyle = getColorByTerrainType(tileType);
+                }
+                ctx.fillRect(x * tileSize, y * tileSize, tileSize, tileSize);
+                ctx.strokeStyle = "#ffffff";
+                ctx.strokeRect(x * tileSize, y * tileSize, tileSize, tileSize);
+              }
+            }
+          }
+
+          drawMap();
+          drawPlayer(ctx);
+        }, [playerPosition, playerState]);
+
+        function drawPlayer(ctx, offsetX = 0, offsetY = 0) {
+          const { x: characterX, y: characterY } = playerStates[playerState];
+          const centerX = Math.floor(viewSize / 2) * tileSize + offsetX;
+          const centerY = Math.floor(viewSize / 2) * tileSize + offsetY;
+          const mapX = playerPosition.x;
+          const mapY = playerPosition.y;
+
+          ctx.drawImage(
+            characterSprite,
+            characterX,
+            characterY,
+            characterSize,
+            characterSize,
+            centerX,
+            centerY,
+            tileSize,
+            tileSize
+          );
+        }
+
+        function animateMove(ctx, targetPosition, direction) {
+          const startX = playerPosition.x;
+          const startY = playerPosition.y;
+          const deltaX = targetPosition.x - startX;
+          const deltaY = targetPosition.y - startY;
+          const startTime = performance.now();
+
+          function animate(currentTime) {
+            const elapsed = currentTime - startTime;
+            const progress = Math.min(elapsed / moveDuration, 1);
+
+            const xOffset = deltaX * progress * tileSize;
+            const yOffset = deltaY * progress * tileSize;
+
+            drawPlayer(ctx, xOffset, yOffset);
+
+            if (progress < 1) {
+              requestAnimationFrame(animate);
+            } else {
+              setIsMoving(false);
+              setPlayerPosition(targetPosition);
+              setPlayerState(direction.replace("_move", ""));
+            }
+          }
+
+          requestAnimationFrame(animate);
+        }
+
+        function handleKeyPress(event) {
+          if (isMoving) return;
+
+          const canvas = canvasRef.current;
+          const ctx = canvas.getContext("2d");
+          let newPosition = { ...playerPosition };
+          let newState = playerState;
+
+          switch (event.key) {
+            case "ArrowUp":
+              newState = "back_move";
+              if (
+                playerPosition.y > 0 &&
+                unReachableTerrainTypes.indexOf(
+                  mapData[playerPosition.y - 1][playerPosition.x]
+                ) === -1
+              )
+                newPosition.y -= 1;
+              break;
+            case "ArrowDown":
+              newState = "face_move";
+              if (
+                playerPosition.y < mapData.length - 1 &&
+                unReachableTerrainTypes.indexOf(
+                  mapData[playerPosition.y + 1][playerPosition.x]
+                ) === -1
+              )
+                newPosition.y += 1;
+              break;
+            case "ArrowLeft":
+              newState = "left_move";
+              if (
+                playerPosition.x > 0 &&
+                unReachableTerrainTypes.indexOf(
+                  mapData[playerPosition.y][playerPosition.x - 1]
+                ) === -1
+              )
+                newPosition.x -= 1;
+              break;
+            case "ArrowRight":
+              newState = "right_move";
+              if (
+                playerPosition.x < mapData[0].length - 1 &&
+                unReachableTerrainTypes.indexOf(
+                  mapData[playerPosition.y][playerPosition.x + 1]
+                ) === -1
+              )
+                newPosition.x += 1;
+              break;
+            default:
+              return;
+          }
+
+          setPlayerState(newState);
+          setIsMoving(true);
+          animateMove(ctx, newPosition, newState);
+        }
+
+        React.useEffect(() => {
+          window.addEventListener("keydown", handleKeyPress);
+          return () => window.removeEventListener("keydown", handleKeyPress);
+        }, [playerPosition, isMoving]);
+
+        return (
+          <canvas
+            ref={canvasRef}
+            width={viewSize * tileSize}
+            height={viewSize * tileSize}
+          />
+        );
+      }
+
+      function App() {
+        return (
+          <main>
+            <BourgPalette />
+          </main>
+        );
+      }
+
+      ReactDOM.render(<App />, document.getElementById("root"));
+    </script>
+  </body>
+</html>

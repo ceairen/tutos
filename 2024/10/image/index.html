@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pricing</title>
+    <script
+      src="https://unpkg.com/react@17/umd/react.development.js"
+      crossorigin
+    ></script>
+    <script
+      src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"
+      crossorigin
+    ></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap");
+      * {
+        box-sizing: border-box;
+        font-family: "Quicksand", sans-serif;
+      }
+      body {
+        --main-color: #bfd0cd;
+        --seconday-color: #1c1c1c;
+        --main-gradient: linear-gradient(90deg, #35c4ff 0%, #b24eff 100%);
+        margin: 0;
+        padding: 0;
+        background-color: var(--main-color);
+        color: white;
+      }
+      main {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      p {
+        color: black;
+        margin: 0;
+        font-size: 18px;
+        font-weight: bold;
+      }
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .ImageDescription {
+        --image-size: 400px;
+        width: var(--image-size);
+        height: calc(var(--image-size) * 0.7);
+        cursor: pointer;
+        position: relative;
+        background-color: rgba(255, 255, 255, 0.5);
+        box-shadow: 0px 5px 18px -10px #000000;
+      }
+      .ImageDescription > .ImageDescription_desc {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 50%;
+        bottom: 0;
+        display: flex;
+        align-items: center;
+        padding: 15px;
+      }
+      .ImageDescription > img {
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
+        clip-path: polygon(100% 0, 100% 50%, 100% 100%, 0% 100%, 0 50%, 0% 0%);
+        transition: clip-path 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      }
+      .ImageDescription:hover > img {
+        clip-path: polygon(
+          100% 0,
+          100% 50%,
+          100% 100%,
+          43% 100%,
+          50% 50%,
+          43% 0
+        );
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/babel">
+      function ImageDescription({ src, desc }) {
+        return (
+          <div className="ImageDescription">
+            <div className="ImageDescription_desc">
+              <p>{desc}</p>
+            </div>
+            <img src={src} alt="desc" />
+          </div>
+        );
+      }
+      function App() {
+        return (
+          <main>
+            <ImageDescription
+              src={"https://picsum.photos/400/280"}
+              desc="This is an image description."
+            />
+          </main>
+        );
+      }
+      ReactDOM.render(<App />, document.getElementById("root"));
+    </script>
+  </body>
+</html>

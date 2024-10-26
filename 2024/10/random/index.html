@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pricing</title>
+    <script
+      src="https://unpkg.com/react@17/umd/react.development.js"
+      crossorigin
+    ></script>
+    <script
+      src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"
+      crossorigin
+    ></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap");
+      @font-face {
+        font-family: "MarioPartyHudson";
+        src: url("https://images.yoannbraie.fr/fonts/Mario-Party-Hudson-Font.ttf")
+          format("truetype");
+        font-weight: normal;
+        font-style: normal;
+      }
+      * {
+        box-sizing: border-box;
+        font-family: "Quicksand", sans-serif;
+      }
+      body {
+        --main-color: #bfd0cd;
+        --seconday-color: #1c1c1c;
+        --main-gradient: linear-gradient(90deg, #35c4ff 0%, #b24eff 100%);
+        margin: 0;
+        padding: 0;
+        background-color: var(--main-color);
+        color: white;
+        perspective: 800px;
+      }
+      main {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .MarioPartyDice label {
+        font-family: "MarioPartyHudson", sans-serif;
+        font-size: 3em;
+      }
+
+      .MarioPartyDice {
+        position: relative;
+        width: 100px;
+        height: 100px;
+        transform-style: preserve-3d;
+        transform-origin: 50% 50%;
+        pointer-events: none;
+      }
+      .face {
+        position: absolute;
+        width: 100px;
+        height: 100px;
+        background-color: #eb433e;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 24px;
+        border-radius: 6px;
+        font-family: sans-serif;
+      }
+
+      .MarioPartyDice label {
+        --label-size: 80%;
+        width: var(--label-size);
+        height: var(--label-size);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: white;
+        border-radius: 15px;
+        color: #fef444;
+        text-shadow: 0px 2px 5px #474747, 1px 7px 3px rgba(206, 89, 55, 0);
+      }
+      .face-5 > label {
+        transform: rotateZ(180deg) rotateY(180deg);
+      }
+
+      .face-6 > label {
+        transform: rotateY(360deg) rotateX(180deg);
+      }
+
+      .MarioPartyDiceContainer {
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.2/gsap.min.js"></script>
+    <script type="text/babel">
+      function De() {
+        function handleClick() {
+          if (deAnimation.paused()) {
+            deAnimation.play();
+            return;
+          }
+          deAnimation.pause();
+
+          const result = Math.floor(Math.random() * 6) + 1;
+
+          let rotateX = 0;
+          let rotateY = 0;
+          let rotateZ = 0;
+          let translateX = 0;
+          let translateY = 0;
+
+          switch (result) {
+            case 2:
+              rotateY = -90;
+              translateX = 50;
+              break;
+            case 3:
+              rotateY = 180;
+              break;
+            case 4:
+              rotateY = 90;
+              translateX = -50;
+              break;
+            case 5:
+              rotateX = 90;
+              translateY = 50;
+              break;
+            case 6:
+              rotateX = -90;
+              translateY = -50;
+              break;
+            default:
+              break;
+          }
+          gsap.to(".MarioPartyDice", {
+            rotationX: rotateX,
+            rotationY: rotateY,
+            translateX: translateX,
+            translateY: translateY,
+            duration: 1,
+            ease: "power4.out",
+          });
+        }
+
+        let deAnimation;
+
+        React.useEffect(() => {
+          gsap.set(".face-1", { translateZ: 100 });
+          gsap.set(".face-2", {
+            rotateY: 90,
+            translateZ: 50,
+            translateX: 50,
+          });
+          gsap.set(".face-3", { rotateY: 180, translateZ: 0 });
+          gsap.set(".face-4", {
+            rotateY: -90,
+            translateZ: 50,
+            translateX: -50,
+          });
+          gsap.set(".face-5", { rotateX: 90, translateZ: 50, translateY: 50 });
+          gsap.set(".face-6", {
+            rotateX: -90,
+            translateZ: 50,
+            translateY: -50,
+          });
+
+          deAnimation = gsap.to(".MarioPartyDice", {
+            rotationX: 360,
+            rotationY: 360,
+            duration: 1,
+            repeat: -1,
+            ease: "linear",
+          });
+        }, []);
+
+        return (
+          <div className="MarioPartyDiceContainer" onClick={handleClick}>
+            <ul className="MarioPartyDice">
+              {Array.from({ length: 6 }, (_, i) => {
+                return (
+                  <li key={i} className={`face face-${i + 1}`}>
+                    <label>{i + 1}</label>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        );
+      }
+      function App() {
+        return (
+          <main>
+            <De />
+          </main>
+        );
+      }
+      ReactDOM.render(<App />, document.getElementById("root"));
+    </script>
+  </body>
+</html>

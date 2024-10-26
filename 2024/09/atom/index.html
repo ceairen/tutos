@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Atom</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        --main-color: #111;
+        margin: 0;
+        padding: 0;
+        background-color: var(--main-color);
+        color: white;
+      }
+      main {
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .atom {
+        --atom-size: 30px;
+        --atom-color: #d5fb37;
+        background-color: var(--atom-color);
+        width: var(--atom-size);
+        height: var(--atom-size);
+        position: relative;
+        transform: rotate(115deg);
+      }
+      .atom > li {
+        --li-loc: calc(0);
+        width: 100%;
+        height: 100%;
+        border: 1px solid #d4fb3738;
+        position: absolute;
+        left: var(--li-loc);
+        top: var(--li-loc);
+        transform: scale(4);
+      }
+      .atom,
+      .atom > li {
+        border-radius: 50%;
+      }
+      .atom > li::before {
+        content: "";
+        position: absolute;
+        width: 4px;
+        height: 4px;
+        background-color: rgba(255, 255, 255, 0.353);
+        border-radius: 50%;
+        top: calc(50% - 2px);
+        left: calc(0px - 2px);
+        animation: rotateAround linear 3s infinite;
+        transform-origin: 16px;
+      }
+      .atom > li:nth-child(3)::before {
+        animation: rotateAround linear 3s infinite reverse;
+      }
+      @keyframes rotateAround {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      .atom > li:nth-child(1) {
+        transform: rotateY(50deg) rotateX(120deg) rotateZ(225deg) scale(4);
+      }
+      .atom > li:nth-child(2) {
+        transform: rotateY(60deg) rotateX(230deg) scale(4);
+      }
+      .atom > li:nth-child(3) {
+        transform: rotateY(70deg) rotateX(-180deg) rotateZ(30deg) scale(4);
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <ul class="atom">
+        <li></li>
+        <li></li>
+        <li></li>
+      </ul>
+    </main>
+  </body>
+</html>

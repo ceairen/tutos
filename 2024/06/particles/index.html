@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Particles</title>
+    <script
+      src="https://unpkg.com/react@17/umd/react.development.js"
+      crossorigin
+    ></script>
+    <script
+      src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"
+      crossorigin
+    ></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap");
+      * {
+        box-sizing: border-box;
+        font-family: "Quicksand", sans-serif;
+      }
+      body {
+        --main-color: #0d0d0c;
+        --seconday-color: #1c1c1c;
+        --main-gradient: linear-gradient(90deg, #35c4ff 0%, #b24eff 100%);
+        margin: 0;
+        padding: 0;
+        background-color: var(--main-color);
+        color: white;
+      }
+      main {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      @keyframes flash {
+        0% {
+          opacity: 0.5;
+        }
+        100% {
+          opacity: 0;
+        }
+      }
+      @keyframes rotateInfinite {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(-360deg);
+        }
+      }
+      .particles {
+        position: relative;
+        animation: rotateInfinite 120s linear 0s infinite;
+        display: block;
+        width: 50px;
+        height: 50px;
+      }
+
+      .particles > li {
+        position: absolute;
+        border-radius: 50%;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/babel">
+      const { useEffect, useRef } = React;
+      function Particle({ particleIndex }) {
+        const ref = useRef();
+        useEffect(() => {
+          const { current } = ref;
+          const baseWidth = 0.2;
+          const pixelSize = `${baseWidth * particleIndex}px`;
+          const particleRotate = (particleIndex + 1) * 15;
+          const particleColor = () => {
+            var letters = "0123456789ABCDEF";
+            var color = "#";
+            for (var i = 0; i < 6; i++) {
+              color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+          };
+          const translateSize = 2 * particleIndex;
+          current.style.cssText = `
+            width: ${pixelSize};
+            height: ${pixelSize};
+            transform: rotate(${particleRotate}deg) translateX(${translateSize}px) translateY(${translateSize}px);
+            background-color: ${particleColor()};
+            animation: flash 2s linear ${particleIndex * 0.01}s infinite;
+            `;
+        }, []);
+        return <li ref={ref}></li>;
+      }
+      function Particles({ quantity, speed }) {
+        return (
+          <ul className="particles">
+            {Array.from({ length: quantity }).map((p, i) => {
+              return <Particle key={i} particleIndex={i} />;
+            })}
+          </ul>
+        );
+      }
+      function App() {
+        return (
+          <main>
+            <Particles quantity="200" speed="20" />
+          </main>
+        );
+      }
+      ReactDOM.render(<App />, document.getElementById("root"));
+    </script>
+  </body>
+</html>

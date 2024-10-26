@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pricing</title>
+    <script
+      src="https://unpkg.com/react@17/umd/react.development.js"
+      crossorigin
+    ></script>
+    <script
+      src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"
+      crossorigin
+    ></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300..700&display=swap");
+      * {
+        box-sizing: border-box;
+        font-family: "Roboto", sans-serif;
+      }
+      body {
+        --main-color: #0d0d0c;
+        --seconday-color: #1c1c1c;
+        --violet-color: #7a5ff0;
+        margin: 0;
+        padding: 0;
+        background-color: var(--main-color);
+        color: white;
+        background-size: cover;
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' version='1.1' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns:svgjs='http://svgjs.dev/svgjs' width='800' height='560' preserveAspectRatio='none' viewBox='0 0 800 560'%3e%3cg mask='url(%26quot%3b%23SvgjsMask1059%26quot%3b)' fill='none'%3e%3cuse xlink:href='%23SvgjsSymbol1066' x='0' y='0'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsSymbol1066' x='720' y='0'%3e%3c/use%3e%3c/g%3e%3cdefs%3e%3cmask id='SvgjsMask1059'%3e%3crect width='800' height='560' fill='white'%3e%3c/rect%3e%3c/mask%3e%3cpath d='M-1 0 a1 1 0 1 0 2 0 a1 1 0 1 0 -2 0z' id='SvgjsPath1065'%3e%3c/path%3e%3cpath d='M-3 0 a3 3 0 1 0 6 0 a3 3 0 1 0 -6 0z' id='SvgjsPath1063'%3e%3c/path%3e%3cpath d='M-5 0 a5 5 0 1 0 10 0 a5 5 0 1 0 -10 0z' id='SvgjsPath1062'%3e%3c/path%3e%3cpath d='M2 -2 L-2 2z' id='SvgjsPath1060'%3e%3c/path%3e%3cpath d='M6 -6 L-6 6z' id='SvgjsPath1061'%3e%3c/path%3e%3cpath d='M30 -30 L-30 30z' id='SvgjsPath1064'%3e%3c/path%3e%3c/defs%3e%3csymbol id='SvgjsSymbol1066'%3e%3cuse xlink:href='%23SvgjsPath1060' x='30' y='30' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1061' x='30' y='90' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1062' x='30' y='150' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1061' x='30' y='210' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1061' x='30' y='270' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1063' x='30' y='330' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1064' x='30' y='390' stroke='rgba(255%2c 205%2c 0%2c 0.21)' stroke-width='3'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1060' x='30' y='450' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1061' x='30' y='510' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1062' x='30' y='570' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1061' x='90' y='30' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1060' x='90' y='90' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1061' x='90' y='150' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1063' x='90' y='210' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1065' x='90' y='270' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1063' x='90' y='330' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1063' x='90' y='390' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1061' x='90' y='450' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1060' x='90' y='510' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1063' x='90' y='570' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1060' x='150' y='30' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1061' x='150' y='90' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1060' x='150' y='150' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1062' x='150' y='210' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1061' x='150' y='270' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1062' x='150' y='330' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1062' x='150' y='390' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1061' x='150' y='450' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1061' x='150' y='510' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1061' x='150' y='570' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1060' x='210' y='30' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1062' x='210' y='90' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1062' x='210' y='150' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1061' x='210' y='210' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1061' x='210' y='270' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1062' x='210' y='330' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1060' x='210' y='390' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1063' x='210' y='450' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1062' x='210' y='510' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1061' x='210' y='570' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1062' x='270' y='30' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1062' x='270' y='90' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1061' x='270' y='150' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1061' x='270' y='210' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1060' x='270' y='270' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1062' x='270' y='330' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1061' x='270' y='390' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1062' x='270' y='450' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1061' x='270' y='510' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1063' x='270' y='570' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1060' x='330' y='30' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1061' x='330' y='90' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1061' x='330' y='150' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1065' x='330' y='210' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1064' x='330' y='270' stroke='rgba(255%2c 205%2c 0%2c 0.21)' stroke-width='3'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1062' x='330' y='330' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1060' x='330' y='390' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1063' x='330' y='450' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1065' x='330' y='510' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1060' x='330' y='570' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1062' x='390' y='30' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1061' x='390' y='90' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1065' x='390' y='150' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1062' x='390' y='210' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1062' x='390' y='270' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1062' x='390' y='330' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1061' x='390' y='390' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1060' x='390' y='450' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1062' x='390' y='510' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1061' x='390' y='570' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1061' x='450' y='30' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1061' x='450' y='90' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1063' x='450' y='150' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1063' x='450' y='210' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1061' x='450' y='270' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1065' x='450' y='330' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1060' x='450' y='390' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1062' x='450' y='450' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1063' x='450' y='510' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1062' x='450' y='570' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1060' x='510' y='30' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1061' x='510' y='90' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1061' x='510' y='150' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1064' x='510' y='210' stroke='rgba(255%2c 205%2c 0%2c 0.21)' stroke-width='3'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1060' x='510' y='270' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1062' x='510' y='330' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1061' x='510' y='390' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1062' x='510' y='450' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1061' x='510' y='510' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1062' x='510' y='570' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1065' x='570' y='30' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1063' x='570' y='90' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1062' x='570' y='150' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1060' x='570' y='210' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1062' x='570' y='270' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1061' x='570' y='330' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1063' x='570' y='390' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1060' x='570' y='450' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1060' x='570' y='510' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1062' x='570' y='570' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1062' x='630' y='30' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1061' x='630' y='90' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1062' x='630' y='150' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1061' x='630' y='210' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1060' x='630' y='270' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1061' x='630' y='330' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1065' x='630' y='390' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1062' x='630' y='450' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1062' x='630' y='510' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1065' x='630' y='570' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1062' x='690' y='30' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1060' x='690' y='90' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1062' x='690' y='150' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1065' x='690' y='210' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1061' x='690' y='270' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1060' x='690' y='330' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1063' x='690' y='390' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1060' x='690' y='450' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1060' x='690' y='510' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1060' x='690' y='570' stroke='rgba(255%2c 205%2c 0%2c 0.21)'%3e%3c/use%3e%3c/symbol%3e%3c/svg%3e");
+      }
+      main {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .Metro {
+        --line-color: #ffcd00;
+        display: flex;
+      }
+      .Metro > li {
+        --metro-li-size: 50px;
+        width: var(--metro-li-size);
+        position: relative;
+        height: 2px;
+        background-color: var(--line-color);
+      }
+      .Metro > li::before {
+        --b-size: 10px;
+        content: "";
+        position: absolute;
+        left: 0;
+        width: var(--b-size);
+        height: var(--b-size);
+        background-color: var(--line-color);
+        top: calc(1px - var(--b-size) / 2);
+        border-radius: 50%;
+      }
+      .Metro > li.WithCorrespondances::before {
+        background-color: white;
+      }
+      .Metro > li:last-child {
+        background-color: transparent;
+      }
+      .Metro > li > label {
+        position: absolute;
+        left: 0;
+        top: 0;
+        font-size: 14px;
+        white-space: nowrap;
+        margin-left: 5px;
+        transform: translateY(-30px) rotate(-55deg);
+        transform-origin: bottom left;
+        font-weight: bold;
+        letter-spacing: 1px;
+      }
+      .Metro > li:last-child::before,
+      .Metro > li:first-child::before {
+        background-color: #d8cf7c;
+      }
+      .Correspondances {
+        --child-size: calc(var(--metro-li-size) / 2);
+        display: block;
+        transform: translateY(20px) translateX(-7px);
+      }
+      .Correspondances > li {
+        display: flex;
+        margin: 0px 0 0 0;
+      }
+      .Correspondances > li > span {
+        --corr-color: "transparent";
+        border: 1px solid var(--corr-color);
+        font-weight: bold;
+        font-size: 12px;
+      }
+      .Correspondances > li > span.Full {
+        background-color: var(--corr-color);
+        color: white;
+      }
+      .Correspondances > li > span.Empty {
+        color: var(--corr-color);
+        background-color: white;
+      }
+      .Correspondances b,
+      .Correspondances span {
+        display: block;
+        width: var(--child-size);
+        height: var(--child-size);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        transform: scale(0.9);
+      }
+      .Correspondances b {
+        color: #8291b2;
+        border: 1px solid #8291b2;
+        background-color: white;
+        font-size: clamp(8px, 1.5vw, 10px);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/babel">
+      function Metro({ plan }) {
+        return (
+          <ul className="Metro">
+            {plan.map((line, i) => {
+              const { stop, correspondances } = line;
+              return (
+                <li
+                  key={i}
+                  className={`${
+                    correspondances.length > 0 ? "WithCorrespondances" : ""
+                  }`}
+                >
+                  <label>{stop}</label>
+                  {correspondances.length > 0 && (
+                    <ul className="Correspondances">
+                      {correspondances.map((c, i) => {
+                        const { type, ligne, color } = c;
+                        return (
+                          <li key={i}>
+                            <b>
+                              {type === "metro"
+                                ? "M"
+                                : type === "tram"
+                                ? "T"
+                                : type}
+                            </b>
+                            <span
+                              className={type === "metro" ? "Full" : "Empty"}
+                              style={{ "--corr-color": color }}
+                            >
+                              {ligne}
+                            </span>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  )}
+                </li>
+              );
+            })}
+          </ul>
+        );
+      }
+      function App() {
+        const plan = [
+          {
+            stop: "La Défense – Grande Arche",
+            correspondances: [
+              { type: "RER", ligne: "A", color: "#ff0000" },
+              { type: "tram", ligne: "T2", color: "#8a5c2d" },
+            ],
+          },
+          {
+            stop: "Esplanade de La Défense",
+            correspondances: [],
+          },
+          {
+            stop: "Pont de Neuilly",
+            correspondances: [],
+          },
+          {
+            stop: "Les Sablons",
+            correspondances: [],
+          },
+          {
+            stop: "Porte Maillot",
+            correspondances: [{ type: "RER", ligne: "C", color: "#ffdc00" }],
+          },
+          {
+            stop: "Argentine",
+            correspondances: [],
+          },
+          {
+            stop: "Charles de Gaulle – Étoile",
+            correspondances: [
+              { type: "RER", ligne: "A", color: "#ff0000" },
+              { type: "metro", ligne: "2", color: "#0055c8" },
+              { type: "metro", ligne: "6", color: "#82c5db" },
+            ],
+          },
+          {
+            stop: "George V",
+            correspondances: [],
+          },
+          {
+            stop: "Franklin D. Roosevelt",
+            correspondances: [{ type: "metro", ligne: "9", color: "#d29c00" }],
+          },
+          {
+            stop: "Champs-Élysées – Clemenceau",
+            correspondances: [{ type: "metro", ligne: "13", color: "#99ccff" }],
+          },
+          {
+            stop: "Concorde",
+            correspondances: [
+              { type: "metro", ligne: "8", color: "#ac82bd" },
+              { type: "metro", ligne: "12", color: "#007852" },
+            ],
+          },
+          {
+            stop: "Tuileries",
+            correspondances: [],
+          },
+          {
+            stop: "Palais Royal – Musée du Louvre",
+            correspondances: [{ type: "metro", ligne: "7", color: "#f59ac0" }],
+          },
+          {
+            stop: "Louvre – Rivoli",
+            correspondances: [],
+          },
+          {
+            stop: "Châtelet",
+            correspondances: [
+              { type: "metro", ligne: "4", color: "#a1027a" },
+              { type: "metro", ligne: "7", color: "#f59ac0" },
+              { type: "metro", ligne: "11", color: "#7c5c0a" },
+              { type: "metro", ligne: "14", color: "#612b5a" },
+              { type: "RER", ligne: "A", color: "#ff0000" },
+              { type: "RER", ligne: "B", color: "#018752" },
+              { type: "RER", ligne: "D", color: "#008cba" },
+            ],
+          },
+          {
+            stop: "Hôtel de Ville",
+            correspondances: [{ type: "metro", ligne: "11", color: "#7c5c0a" }],
+          },
+          {
+            stop: "Saint-Paul",
+            correspondances: [],
+          },
+          {
+            stop: "Bastille",
+            correspondances: [
+              { type: "metro", ligne: "5", color: "#e59500" },
+              { type: "metro", ligne: "8", color: "#ac82bd" },
+            ],
+          },
+          {
+            stop: "Gare de Lyon",
+            correspondances: [
+              { type: "metro", ligne: "14", color: "#612b5a" },
+              { type: "RER", ligne: "A", color: "#ff0000" },
+              { type: "RER", ligne: "D", color: "#008cba" },
+            ],
+          },
+          {
+            stop: "Reuilly – Diderot",
+            correspondances: [{ type: "metro", ligne: "8", color: "#ac82bd" }],
+          },
+          {
+            stop: "Nation",
+            correspondances: [
+              { type: "metro", ligne: "2", color: "#0055c8" },
+              { type: "metro", ligne: "6", color: "#82c5db" },
+              { type: "metro", ligne: "9", color: "#d29c00" },
+              { type: "RER", ligne: "A", color: "#ff0000" },
+            ],
+          },
+          {
+            stop: "Porte de Vincennes",
+            correspondances: [],
+          },
+          {
+            stop: "Saint-Mandé",
+            correspondances: [],
+          },
+          {
+            stop: "Bérault",
+            correspondances: [],
+          },
+          {
+            stop: "Château de Vincennes",
+            correspondances: [],
+          },
+        ];
+
+        return (
+          <main>
+            <Metro plan={plan} />
+          </main>
+        );
+      }
+      ReactDOM.render(<App />, document.getElementById("root"));
+    </script>
+  </body>
+</html>

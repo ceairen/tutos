@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pricing</title>
+    <script
+      src="https://unpkg.com/react@17/umd/react.development.js"
+      crossorigin
+    ></script>
+    <script
+      src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"
+      crossorigin
+    ></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap");
+      * {
+        box-sizing: border-box;
+        font-family: "Quicksand", sans-serif;
+      }
+      body {
+        --main-color: #bfd0cd;
+        --seconday-color: #1c1c1c;
+        --main-gradient: linear-gradient(90deg, #35c4ff 0%, #b24eff 100%);
+        margin: 0;
+        padding: 0;
+        background-color: var(--main-color);
+        color: white;
+      }
+      main {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .Image {
+        --img-size: 500px;
+        display: flex;
+        width: var(--img-size);
+        height: calc(var(--img-size) / 1.5);
+        position: relative;
+        cursor: pointer;
+        border-radius: 5px;
+      }
+      .Image > li:nth-child(1),
+      .Image > li:nth-child(3) {
+        width: 50%;
+        height: 100%;
+        background-size: 200% 100%;
+        background-repeat: no-repeat;
+        position: relative;
+      }
+      .Image > li:nth-child(1) {
+        background-position: left;
+        transform-origin: left;
+        transform: translateX(0);
+        transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      }
+      .Image > li:nth-child(3) {
+        background-position: right;
+        z-index: 2;
+      }
+      .Image:hover > li:nth-child(1) {
+        transform: translateX(100%);
+      }
+      .Image > li:nth-child(2) {
+        --desc-margin: 40px;
+        position: absolute;
+        top: var(--desc-margin);
+        bottom: var(--desc-margin);
+        left: var(--desc-margin);
+        right: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 40px;
+        color: black;
+        font-weight: bold;
+        pointer-events: none;
+        z-index: -1;
+        background-color: #f7f7f7;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/babel">
+      function Image({ image }) {
+        const { src, description } = image;
+        const liStyle = { backgroundImage: `url(${src})` };
+        return (
+          <ul className="Image">
+            <li style={liStyle}></li>
+            <li>{description}</li>
+            <li style={liStyle}></li>
+          </ul>
+        );
+      }
+      function App() {
+        return (
+          <main>
+            <Image image={{ src: "./cat.webp", description: "Cat." }} />
+          </main>
+        );
+      }
+      ReactDOM.render(<App />, document.getElementById("root"));
+    </script>
+  </body>
+</html>

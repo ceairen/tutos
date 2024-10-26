@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Template</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      .tuto {
+        position: relative;
+      }
+      body {
+        --main-color: #24262d;
+        margin: 0;
+        padding: 0;
+        background-color: var(--main-color);
+        color: white;
+      }
+      main {
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .tuto {
+        --tuto-color: #ee0602;
+        --tuto-size: 100px;
+        width: var(--tuto-size);
+        height: var(--tuto-size);
+        background-color: var(--tuto-color);
+        transform: rotate(-135deg);
+      }
+      .tuto::before,
+      .tuto::after {
+        content: "";
+        width: var(--tuto-size);
+        height: var(--tuto-size);
+        display: block;
+        background-color: var(--tuto-color);
+        position: absolute;
+        border-radius: 50%;
+      }
+      .tuto::after {
+        transform: translateY(calc(var(--tuto-size) / 2));
+      }
+      .tuto::before {
+        transform: translateX(calc(var(--tuto-size) / 2));
+      }
+    </style>
+  </head>
+  <body>
+    <main><div class="tuto"></div></main>
+  </body>
+</html>

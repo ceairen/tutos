@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pricing</title>
+    <script
+      src="https://unpkg.com/react@17/umd/react.development.js"
+      crossorigin
+    ></script>
+    <script
+      src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"
+      crossorigin
+    ></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap");
+      * {
+        box-sizing: border-box;
+        font-family: "Quicksand", sans-serif;
+        cursor: crosshair !important;
+      }
+      body {
+        --main-color: #0d0d0c;
+        --seconday-color: #1c1c1c;
+        --main-gradient: linear-gradient(90deg, #35c4ff 0%, #b24eff 100%);
+        margin: 0;
+        padding: 0;
+        background-color: var(--main-color);
+        color: white;
+      }
+      span {
+        transition: width 0.3s, height 0.3s;
+      }
+      main {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      button {
+        --button-width: 150px;
+        --button-height: 50px;
+        background-color: #694bfb;
+        color: white;
+        width: var(--button-width);
+        height: var(--button-height);
+        border-radius: var(--button-height);
+        border: none;
+        font-size: 1.2em;
+        font-weight: bold;
+        box-shadow: 0px 2px 5px 0px #694bfb;
+        transition: all 0.3s;
+      }
+      button:hover {
+        color: #694bfb;
+        background-color: #0d0d0c;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/babel">
+      const { useEffect, useState } = React;
+      function Cursor() {
+        const [coords, setCoords] = useState({ x: 0, y: 0 });
+        const [width, setWidth] = useState(20);
+        const [height, setHeight] = useState(20);
+        const [lock, setLock] = useState(false);
+
+        useEffect(() => {
+          function handleMouseMove(e) {
+            const { clientX: x, clientY: y } = e;
+            if (lock) return;
+            setCoords({ x: x - 10, y: y - 10 });
+          }
+          function handleCursorEnterElement(e) {
+            const hoverMargin = 6;
+            setLock(true);
+            const { srcElement: element } = e;
+            const {
+              offsetLeft: x,
+              offsetTop: y,
+              offsetWidth: w,
+              offsetHeight: h,
+            } = element;
+            setCoords({ x: x - hoverMargin / 2, y: y - hoverMargin / 2 });
+            setWidth(w + hoverMargin);
+            setHeight(h + hoverMargin);
+          }
+          function handleCursorLeaveElement() {
+            setLock(false);
+            setWidth(20);
+            setHeight(20);
+          }
+          document.addEventListener("mousemove", handleMouseMove);
+          const ch = Array.from(document.querySelectorAll(".CursorHovereable"));
+          ch.map((e) => {
+            e.addEventListener("mouseenter", handleCursorEnterElement);
+            e.addEventListener("mouseleave", handleCursorLeaveElement);
+          });
+          return () => {
+            document.removeEventListener("mousemove", handleMouseMove);
+            ch.map((e) => {
+              e.removeEventListener("mouseenter", handleCursorEnterElement);
+              e.removeEventListener("mouseleave", handleCursorLeaveElement);
+            });
+          };
+        }, [lock]);
+
+        return (
+          <span
+            className="magicCursor"
+            style={{
+              position: "fixed",
+              left: coords.x,
+              top: coords.y,
+              width: `${width}px`,
+              height: `${height}px`,
+              borderRadius: height,
+              backgroundColor: "#694bfb",
+              zIndex: -1,
+            }}
+          ></span>
+        );
+      }
+      function App() {
+        return (
+          <main>
+            <div>
+              <Cursor />
+              <button className="CursorHovereable">Button</button>
+            </div>
+          </main>
+        );
+      }
+      ReactDOM.render(<App />, document.getElementById("root"));
+    </script>
+  </body>
+</html>

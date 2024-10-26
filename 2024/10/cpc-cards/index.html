@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pricing</title>
+    <script
+      src="https://unpkg.com/react@17/umd/react.development.js"
+      crossorigin
+    ></script>
+    <script
+      src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"
+      crossorigin
+    ></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap");
+      * {
+        box-sizing: border-box;
+        font-family: "Quicksand", sans-serif;
+      }
+      body {
+        --main-color: #0d0d0c;
+        --seconday-color: #1c1c1c;
+        --main-gradient: linear-gradient(90deg, #35c4ff 0%, #b24eff 100%);
+        margin: 0;
+        padding: 0;
+        background-color: var(--main-color);
+        color: white;
+      }
+      main {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+      }
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .game-board {
+        --card-size: 170px;
+        display: grid;
+        grid-template-columns: repeat(4, var(--card-size));
+        grid-gap: 10px;
+        justify-content: center;
+        margin: 20px auto;
+      }
+
+      .card {
+        width: var(--card-size);
+        height: calc(var(--card-size) * 1.5);
+        background-color: #333;
+        border-radius: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 3rem;
+        color: white;
+        cursor: pointer;
+        transition: background-color 0.5s,
+          transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        transform: rotateY(0deg);
+        --x: 50%;
+        --y: 50%;
+        background: radial-gradient(
+          circle at var(--x) var(--y),
+          #ff791f3d,
+          transparent
+        );
+        border: 2px solid transparent;
+      }
+      .card > img {
+        width: 100%;
+        pointer-events: none;
+        transform: scale(0.7);
+      }
+
+      .card.flipped {
+        border-color: #ff791f3d;
+        transform: rotateY(180deg);
+      }
+
+      .card.matched {
+        background-color: #49eb6e;
+        opacity: 0.7;
+        transform: scale(0.9);
+        cursor: default;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/babel">
+      const { useState, useEffect, useRef } = React;
+      const cardsArray = [
+        { name: "🤖", id: 1, matched: false },
+        { name: "👻", id: 2, matched: false },
+        { name: "🧙", id: 3, matched: false },
+        { name: "🧟", id: 4, matched: false },
+        { name: "🤖", id: 5, matched: false },
+        { name: "👻", id: 6, matched: false },
+        { name: "🧙", id: 7, matched: false },
+        { name: "🧟", id: 8, matched: false },
+      ];
+      function shuffle(array) {
+        return array.sort(() => 0.5 - Math.random());
+      }
+
+      function Card({ card, isFlipped, onClick }) {
+        const ref = useRef();
+
+        useEffect(() => {
+          const cardRef = ref.current;
+          function handleMouseMove(e) {
+            const card = e.target;
+            const { left, top } = card.getBoundingClientRect();
+            card.style.setProperty("--x", `${e.clientX - left}px`);
+            card.style.setProperty("--y", `${e.clientY - top}px`);
+          }
+          cardRef.addEventListener("mousemove", handleMouseMove);
+          return () => {
+            cardRef.removeEventListener("mousemove", handleMouseMove);
+          };
+        }, []);
+
+        return (
+          <div
+            ref={ref}
+            className={`card ${isFlipped ? "flipped" : ""} ${
+              card.matched ? "matched" : ""
+            }`}
+            onClick={() => {
+              if (card.matched) return;
+              onClick();
+            }}
+          >
+            {isFlipped ? card.name : <img src="./citrouille.png" />}
+          </div>
+        );
+      }
+
+      function GameBoard() {
+        const [cards, setCards] = useState([]);
+        const [firstCard, setFirstCard] = useState(null);
+        const [secondCard, setSecondCard] = useState(null);
+        const [lockBoard, setLockBoard] = useState(false);
+
+        useEffect(() => {
+          setCards(shuffle(cardsArray));
+        }, []);
+
+        const handleCardClick = (card) => {
+          if (lockBoard || card === firstCard) return;
+
+          if (!firstCard) {
+            setFirstCard(card);
+          } else {
+            setSecondCard(card);
+            setLockBoard(true);
+            checkForMatch(card);
+          }
+        };
+
+        const checkForMatch = (secondCard) => {
+          if (firstCard.name === secondCard.name) {
+            setCards((cards) => {
+              const updatedCards = cards.map((card) => {
+                if (card.id === secondCard.id || card.id === firstCard.id) {
+                  return { ...card, matched: true };
+                }
+                return card;
+              });
+              return updatedCards;
+            });
+            disableCards();
+          } else {
+            unflipCards();
+          }
+        };
+
+        const disableCards = () => {
+          setFirstCard(null);
+          setSecondCard(null);
+          setLockBoard(false);
+        };
+
+        const unflipCards = () => {
+          setTimeout(() => {
+            setFirstCard(null);
+            setSecondCard(null);
+            setLockBoard(false);
+          }, 1000);
+        };
+
+        return (
+          <div className="game-board">
+            {cards.map((card, index) => (
+              <Card
+                key={index}
+                card={card}
+                isFlipped={
+                  card === firstCard || card === secondCard || card.matched
+                }
+                onClick={() => handleCardClick(card)}
+              />
+            ))}
+          </div>
+        );
+      }
+
+      function App() {
+        return (
+          <>
+            <main>
+              <GameBoard />
+            </main>
+            <div
+              style={{
+                position: "fixed",
+                bottom: "20px",
+                right: "20px",
+                fontSize: "16px",
+                display: "flex",
+                alignItems: "center",
+                boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
+                cursor: "pointer",
+              }}
+            >
+              <label style={{ fontWeight: "bold", marginRight: 10 }}>
+                Video on
+              </label>
+              <a
+                target="__blank"
+                href="https://www.tiktok.com/@c.eairen/video/7426291423667817760"
+                style={{
+                  marginRight: 10,
+                  backgroundColor: "#ff791f3d",
+                  color: "white",
+                  padding: "5px 10px",
+                  borderRadius: "30px",
+                  textDecoration: "none",
+                  fontWeight: "bold",
+                }}
+              >
+                TikTok
+              </a>
+              <a
+                target="__blank"
+                href="https://www.youtube.com/shorts/9bfsXlSSd6E"
+                style={{
+                  backgroundColor: "#ff791f3d",
+                  color: "white",
+                  padding: "5px 10px",
+                  borderRadius: "30px",
+                  textDecoration: "none",
+                  fontWeight: "bold",
+                }}
+              >
+                YouTube
+              </a>
+            </div>
+          </>
+        );
+      }
+      ReactDOM.render(<App />, document.getElementById("root"));
+    </script>
+  </body>
+</html>

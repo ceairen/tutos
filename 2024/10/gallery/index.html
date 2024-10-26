@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Template</title>
+    <script
+      src="https://unpkg.com/react@17/umd/react.development.js"
+      crossorigin
+    ></script>
+    <script
+      src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"
+      crossorigin
+    ></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Merriweather&display=swap");
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: #24262d;
+      }
+
+      * {
+        box-sizing: border-box;
+        font-family: "Merriweather", serif;
+      }
+
+      :root {
+        --sizeCreaBlock: 270px;
+        --bgCreaBlock: #1e1f25;
+        --blockTranslateX: 190px;
+        --blockRotateY: 40deg;
+        --marginSize: 36px;
+        --shadowColor: 15px 5px 20px -7px rgb(0 0 0 / 30%);
+        --blocImgSize: 200px;
+
+        --arc-blue: rgba(53, 113, 158, 1);
+        --arc-vert: #4caf50;
+        --arc-jaune: #ffeb3b;
+        --arc-rose: #e91e63;
+        --arc-orange: #f76334;
+      }
+
+      /* –––––––––––––––––––– */
+      .creationsBlocUl {
+        white-space: nowrap;
+        text-align: center;
+        min-height: 450px;
+        overflow: hidden;
+        padding: 50px 0;
+      }
+      .blocImg {
+        width: 100%;
+        height: var(--blocImgSize);
+        position: relative;
+        z-index: 9999;
+        padding: 10px;
+      }
+      .blocImg > img {
+        width: 100%;
+        height: 100%;
+        border-radius: 10px;
+        object-fit: cover;
+      }
+      .blocImg > img::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: #3a3e4c;
+      }
+      .creaBlock {
+        width: var(--sizeCreaBlock);
+        background-color: var(--bgCreaBlock);
+        padding: 50px 20px 20px 20px;
+        border-radius: 7px;
+        position: relative;
+        overflow: hidden;
+        display: inline-block;
+        white-space: normal;
+        vertical-align: top;
+        transition: all 0.3s;
+
+        -webkit-box-shadow: var(--shadowColor);
+        -moz-box-shadow: var(--shadowColor);
+        box-shadow: var(--shadowColor);
+        cursor: pointer;
+      }
+      .creaBlock:not(.creaBlockPrez):hover {
+        transform: scale(1);
+      }
+      .creaBlock::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 10%;
+        width: calc(var(--sizeCreaBlock) * 2);
+        height: calc(var(--sizeCreaBlock) * 2);
+        background-color: #353842;
+        transform: rotateZ(70deg);
+        z-index: -1;
+      }
+      .creaBlock > figcaption {
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 20%;
+        font-weight: bold;
+        color: white;
+        padding: 25px;
+        font-size: 16px;
+        opacity: 0.8;
+        text-align: left;
+      }
+      .creaBlock h2 {
+        font-size: 20px;
+        width: 70%;
+        color: white;
+        font-weight: bold;
+        height: 54px;
+        display: block;
+        text-align: left;
+        overflow: hidden;
+        background-color: transparent;
+        transition: var(--background-color) 0.6s;
+      }
+      .creaBlock img {
+        width: 100%;
+        height: 100%;
+        border-radius: 10px;
+      }
+      .creaBlock {
+        transform: scale(0.9);
+      }
+      .creaBlock .lineSeparator {
+        background-color: #00bcd4;
+      }
+      .creaBlockPrez:nth-child(1) {
+        z-index: 1;
+        transform: scale(0.9);
+      }
+      .creaBlockPrez:nth-child(1):hover {
+        transform: scale(1.1);
+      }
+      .creaBlockPrez:nth-child(1):hover ~ .creaBlockPrez:nth-child(2) {
+        transform: scale(0.83) translateX(var(--blockTranslateX))
+          rotateY(var(--blockRotateY));
+      }
+      .creaBlockPrez:nth-child(1):hover ~ .creaBlockPrez:nth-child(3) {
+        transform: scale(0.88) translateX(var(--blockTranslateX))
+          rotateY(var(--blockRotateY));
+      }
+      .creaBlockPrez:nth-child(1):hover ~ .creaBlockPrez:nth-child(4) {
+        transform: scale(0.93) translateX(var(--blockTranslateX))
+          rotateY(var(--blockRotateY));
+      }
+      .creaBlockPrez:nth-child(1):hover ~ .creaBlockPrez:nth-child(5) {
+        transform: scale(0.98) translateX(var(--blockTranslateX))
+          rotateY(var(--blockRotateY));
+      }
+      .creaBlockPrez:nth-child(2) {
+        z-index: 2;
+        margin-left: calc(-6 * var(--marginSize));
+        transform: scale(0.94);
+        animation: displayCreations 0.5s linear 0.4s forwards;
+      }
+      .creaBlockPrez:nth-child(2):hover {
+        transform: scale(1.1);
+      }
+      .creaBlockPrez:nth-child(2):hover ~ .creaBlockPrez:nth-child(3) {
+        transform: scale(0.88) translateX(var(--blockTranslateX))
+          rotateY(var(--blockRotateY));
+      }
+      .creaBlockPrez:nth-child(2):hover ~ .creaBlockPrez:nth-child(4) {
+        transform: scale(0.93) translateX(var(--blockTranslateX))
+          rotateY(var(--blockRotateY));
+      }
+      .creaBlockPrez:nth-child(2):hover ~ .creaBlockPrez:nth-child(5) {
+        transform: scale(0.98) translateX(var(--blockTranslateX))
+          rotateY(var(--blockRotateY));
+      }
+      .creaBlockPrez:nth-child(3) {
+        z-index: 3;
+        margin-left: calc(-6 * var(--marginSize));
+        transform: scale(0.98);
+      }
+      .creaBlockPrez:nth-child(3):hover {
+        transform: scale(1.1);
+      }
+      .creaBlockPrez:nth-child(3):hover ~ .creaBlockPrez:nth-child(4) {
+        transform: scale(0.93) translateX(var(--blockTranslateX))
+          rotateY(var(--blockRotateY));
+      }
+      .creaBlockPrez:nth-child(3):hover ~ .creaBlockPrez:nth-child(5) {
+        transform: scale(0.98) translateX(var(--blockTranslateX))
+          rotateY(var(--blockRotateY));
+      }
+      .creaBlockPrez:nth-child(4) {
+        z-index: 4;
+        margin-left: calc(-6 * var(--marginSize));
+        transform: scale(1.02);
+      }
+      .creaBlockPrez:nth-child(4):hover {
+        transform: scale(1.1);
+      }
+      .creaBlockPrez:nth-child(4):hover ~ .creaBlockPrez:nth-child(5) {
+        transform: scale(0.98) translateX(var(--blockTranslateX))
+          rotateY(var(--blockRotateY));
+      }
+      .creaBlockPrez:nth-child(5) {
+        z-index: 5;
+        margin-left: calc(-6 * var(--marginSize));
+        transform: scale(1.06);
+      }
+      .creaBlockPrez:nth-child(5):hover {
+        transform: scale(1.1);
+      }
+      .lineSeparator {
+        width: 100%;
+        background-color: var(--main-box-border-color);
+        height: 4px;
+        border-radius: 5px;
+        margin: 40px 0 25px 0;
+        opacity: 0.4;
+      }
+      .creaBlockPrez:nth-child(1) .lineSeparator {
+        background-color: var(--arc-orange);
+      }
+      .creaBlockPrez:nth-child(2) .lineSeparator {
+        background-color: var(--arc-rose);
+      }
+      .creaBlockPrez:nth-child(3) .lineSeparator {
+        background-color: var(--arc-jaune);
+      }
+      .creaBlockPrez:nth-child(4) .lineSeparator {
+        background-color: var(--arc-vert);
+      }
+      .creaBlockPrez:nth-child(5) .lineSeparator {
+        background-color: var(--arc-blue);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/babel">
+      const GALLERY = [
+        {
+          title: "Kitten: Ollie (12 Weeks)",
+          img: {
+            src: "https://assets.codepen.io/652/the-lucky-neko-CM7a-XBD4AU-unsplash.jpg",
+            alt: "a white kitten with brown and black spots sitting with its paws slightly outstretched.",
+            title: "Photo by The Lucky Neko for Unsplash",
+          },
+        },
+        {
+          title: "Puppy: Barney (9 Weeks)",
+          img: {
+            src: "https://assets.codepen.io/652/karsten-winegeart-NE0XGVKTmcA-unsplash.jpg",
+            alt: "a brown French bulldog puppy laying down and looking up with a hopeful look in its eyes.",
+            title: "Photo by Karsten Winegeart for Unsplash",
+          },
+        },
+        {
+          title: "Cat: Walter (5 Years) ",
+          img: {
+            src: "https://assets.codepen.io/652/kabo-NjWZ07sPEJE-unsplash.jpg",
+            alt: "A large long-haired orange cat with a white belly.",
+            title: "Photo by Kabo for Unsplash",
+          },
+        },
+        {
+          title: "Dog: Miss Sunshine (2 Years)",
+          img: {
+            src: "https://assets.codepen.io/652/giacomo-lucarini-7M0SG3ZKdlE-unsplash.jpg",
+            alt: "A light brown, long-haired chihuahua sitting next to three rubber duckies.",
+            title: "Photo by Giacomo Lucarini for Unsplash",
+          },
+        },
+        {
+          title: "Kitten: Reese (8 Weeks)",
+          img: {
+            src: "https://assets.codepen.io/652/sergey-semin-Y0WXj3xqJz0-unsplash.jpg",
+            alt: "A tabby kitten with green eyes.",
+            title: "Photo by Sergey Semin for Unsplash",
+          },
+        },
+      ];
+
+      const GalleryItem = ({ title, img }) => {
+        return (
+          <figure className="creaBlock creaBlockPrez">
+            <div className="lineSeparator"></div>
+            <div className="blocImg">
+              <img src={img.src} alt={img.alt} title={img.title} />
+            </div>
+            <figcaption>{title}</figcaption>
+          </figure>
+        );
+      };
+      const Gallery = () => {
+        return (
+          <div>
+            <div className="creationsBlocUl">
+              {GALLERY.map((item, index) => (
+                <GalleryItem key={index} title={item.title} img={item.img} />
+              ))}
+            </div>
+          </div>
+        );
+      };
+
+      function App() {
+        return (
+          <main>
+            <Gallery />
+          </main>
+        );
+      }
+      ReactDOM.render(<App />, document.getElementById("root"));
+    </script>
+  </body>
+</html>

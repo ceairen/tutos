@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pricing</title>
+    <script
+      src="https://unpkg.com/react@17/umd/react.development.js"
+      crossorigin
+    ></script>
+    <script
+      src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"
+      crossorigin
+    ></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap");
+      * {
+        box-sizing: border-box;
+        font-family: "Quicksand", sans-serif;
+      }
+      body {
+        --main-color: #0d0d0c;
+        --seconday-color: #1c1c1c;
+        --main-gradient: linear-gradient(90deg, #35c4ff 0%, #b24eff 100%);
+        margin: 0;
+        padding: 0;
+        background-color: var(--main-color);
+        color: white;
+      }
+      main {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      label {
+        font-family: "Source Code Pro", monospace;
+        padding: 10px 0;
+        color: white;
+      }
+
+      .loader {
+        position: relative;
+        overflow: hidden;
+        background-color: #232635;
+        width: 100px;
+        height: 10px;
+        border-radius: 10px;
+        margin-top: 5px;
+      }
+      .loader > div {
+        background-color: #fc00ff;
+        width: 100%;
+      }
+
+      .loader > div::before,
+      .loader > div::after {
+        content: "";
+      }
+
+      .loader > div,
+      .loader > div::before,
+      .loader > div::after {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+      }
+      .loader > div::before {
+        background-color: #00fffc;
+        animation: comeOn 2s linear 0s infinite;
+      }
+
+      .loader > div::after {
+        background-color: #fffc00;
+        animation: comeOn 1s linear 0s infinite;
+      }
+
+      @keyframes comeOn {
+        0% {
+          width: 0px;
+          left: 0px;
+        }
+        50% {
+          left: 0px;
+          width: 100%;
+        }
+        100% {
+          left: 100%;
+          width: 0%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/babel">
+      const { useState } = React;
+      function Loader({ title }) {
+        return (
+          <div>
+            <label>{title}</label>
+            <div className="loader">
+              <div></div>
+            </div>
+          </div>
+        );
+      }
+      function App() {
+        return (
+          <main>
+            <Loader title="Loading..." />
+          </main>
+        );
+      }
+      ReactDOM.render(<App />, document.getElementById("root"));
+    </script>
+  </body>
+</html>

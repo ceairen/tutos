@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pricing</title>
+    <script
+      src="https://unpkg.com/react@17/umd/react.development.js"
+      crossorigin
+    ></script>
+    <script
+      src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"
+      crossorigin
+    ></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap");
+      * {
+        box-sizing: border-box;
+        font-family: "Quicksand", sans-serif;
+      }
+      body {
+        --main-color: #0d0d0c;
+        --seconday-color: #1c1c1c;
+        --main-gradient: linear-gradient(90deg, #35c4ff 0%, #b24eff 100%);
+        margin: 0;
+        padding: 0;
+        background-color: var(--main-color);
+        color: white;
+      }
+      main {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .Button {
+        --btn-padding: 10px;
+        background-color: #694bfb;
+        color: white;
+        border: none;
+        font-weight: bold;
+        font-size: 20px;
+        padding: var(--btn-padding) calc(var(--btn-padding) * 2);
+        border-radius: 5px;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+      }
+      .Button > ul {
+        --icon-size: 44px;
+        width: var(--icon-size);
+        height: var(--icon-size);
+        margin-right: var(--btn-padding);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        position: relative;
+        padding: 6px;
+        transition: transform 0.6s 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      }
+      .Button > ul > li {
+        --li-size: 4px;
+        width: var(--li-size);
+        height: var(--li-size);
+        background-color: white;
+        position: relative;
+        transition: width 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+          transform 0.3s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+      }
+      .Button.list > ul {
+        transform: rotate(180deg);
+      }
+      .Button.list > ul > li {
+        width: calc(100% - 8px);
+        border-radius: var(--li-size);
+      }
+      .Button.list > ul > li::after {
+        content: "";
+        background-color: white;
+        width: var(--li-size);
+        height: var(--li-size);
+        border-radius: var(--li-size);
+        position: absolute;
+        right: -8px;
+      }
+      .Button.grid > ul > li {
+        content: "";
+        width: 50%;
+        height: 50%;
+        transform-origin: top;
+      }
+      .Button.grid > ul > li:nth-child(1),
+      .Button.grid > ul > li:nth-child(3) {
+        transform: translateX(100%) scaleY(1.8) scaleX(0.9);
+      }
+      .Button.grid > ul > li:nth-child(2),
+      .Button.grid > ul > li:nth-child(4) {
+        transform: translateY(-100%) scaleY(1.8) scaleX(0.9);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/babel">
+      function Button() {
+        const [mode, setMode] = React.useState("list");
+
+        return (
+          <button
+            className={`Button ${mode}`}
+            onClick={() =>
+              setMode((mode) => (mode === "list" ? "grid" : "list"))
+            }
+          >
+            <ul>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+            </ul>
+            {mode.toUpperCase()}
+          </button>
+        );
+      }
+      function App() {
+        return (
+          <main>
+            <Button />
+          </main>
+        );
+      }
+      ReactDOM.render(<App />, document.getElementById("root"));
+    </script>
+  </body>
+</html>

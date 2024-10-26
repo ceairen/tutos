@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pricing</title>
+    <script
+      src="https://unpkg.com/react@17/umd/react.development.js"
+      crossorigin
+    ></script>
+    <script
+      src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"
+      crossorigin
+    ></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap");
+      * {
+        box-sizing: border-box;
+        font-family: "Quicksand", sans-serif;
+      }
+      body {
+        --main-color: #0d0d0c;
+        --seconday-color: #1c1c1c;
+        --main-gradient: linear-gradient(90deg, #35c4ff 0%, #b24eff 100%);
+        margin: 0;
+        padding: 0;
+        background-color: var(--main-color);
+        color: white;
+      }
+      main {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .CountdownLine {
+        --translate-speed: 0.5s;
+        --line-size: 60px;
+        width: var(--line-size);
+        height: var(--line-size);
+        overflow: hidden;
+      }
+      .CountdownNumber {
+        --translate-y: 0px;
+        display: flex;
+        flex-direction: column;
+        transform: translateY(calc(0px - var(--translate-y)));
+        transition: transform var(--translate-speed) linear;
+      }
+      .CountdownNumber > li {
+        width: var(--line-size);
+        height: var(--line-size);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 2em;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/babel">
+      function CountdownNumber({ number, numberSize }) {
+        const [currentNumber, setCurrentNumber] = React.useState(number);
+        const [previousNumber, setPreviousNumber] = React.useState(null);
+
+        React.useEffect(() => {
+          if (number !== currentNumber) {
+            setPreviousNumber(currentNumber);
+            setCurrentNumber(number);
+          }
+        }, [number, currentNumber]);
+
+        return (
+          <ul
+            className="CountdownNumber"
+            style={{ "--translate-y": `${number * numberSize}px` }}
+          >
+            {Array.from({ length: 10 }).map((_, i) => {
+              return <li key={i}>{i}</li>;
+            })}
+          </ul>
+        );
+      }
+
+      function Countdown({ number, to, interval = 1000, numberSize = 50 }) {
+        const [currentNumber, setCurrentNumber] = React.useState(number);
+
+        React.useEffect(() => {
+          const intervalId = setInterval(() => {
+            setCurrentNumber((prev) => {
+              const nextNumber = prev > to ? prev - 1 : prev + 1;
+
+              if (nextNumber === to) {
+                clearInterval(intervalId);
+              }
+
+              return nextNumber;
+            });
+          }, interval);
+
+          return () => clearInterval(intervalId);
+        }, [to, interval]);
+
+        const paddedNumber = String(currentNumber).padStart(4, "0");
+
+        return (
+          <ul style={{ display: "flex", listStyle: "none", padding: 0 }}>
+            {Array.from(paddedNumber).map((digit, i) => (
+              <li
+                className="CountdownLine"
+                key={i}
+                style={{
+                  margin: "0 5px",
+                  "--line-size": `${numberSize}px`,
+                  "--translate-speed": `${interval / 2 / 1000}s`,
+                }}
+              >
+                <CountdownNumber number={digit} numberSize={numberSize} />
+              </li>
+            ))}
+          </ul>
+        );
+      }
+
+      function App() {
+        return (
+          <main>
+            <Countdown number={2703} to={3400} interval={20} numberSize={50} />
+          </main>
+        );
+      }
+      ReactDOM.render(<App />, document.getElementById("root"));
+    </script>
+  </body>
+</html>

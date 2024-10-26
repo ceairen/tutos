@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>loading</title>
+    <script
+      src="https://unpkg.com/react@17/umd/react.development.js"
+      crossorigin
+    ></script>
+    <script
+      src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"
+      crossorigin
+    ></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap");
+      * {
+        box-sizing: border-box;
+        font-family: "Quicksand", sans-serif;
+      }
+      body {
+        --main-color: #0d0d0c;
+        --seconday-color: #1c1c1c;
+        --main-gradient: linear-gradient(90deg, #35c4ff 0%, #b24eff 100%);
+        margin: 0;
+        padding: 0;
+        background-color: var(--main-color);
+        color: white;
+      }
+      main {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .loader {
+        display: flex;
+        font-size: 3em;
+        align-items: center;
+        transition: all 0.8s;
+      }
+      .loader > li {
+        margin: 0 10px;
+        transition: all 0.8s 0.6s;
+      }
+      .cog {
+        --cog-size: 34px;
+        width: var(--cog-size);
+        height: var(--cog-size);
+        border-radius: 50%;
+        border: 4px solid #a661d3;
+        position: relative;
+        background-color: #0d0d0c;
+      }
+      .cog > li {
+        height: 4px;
+        background-color: #a661d3;
+        width: calc(100% + 18px);
+        position: absolute;
+        top: calc(50% - 2px);
+        left: -9px;
+        z-index: -1;
+        opacity: 1;
+      }
+      .cog > li:nth-child(1) {
+        transform: rotate(0deg);
+      }
+      .cog > li:nth-child(2) {
+        transform: rotate(45deg);
+      }
+      .cog > li:nth-child(3) {
+        transform: rotate(135deg);
+      }
+      .cog > li:nth-child(4) {
+        transform: rotate(270deg);
+      }
+      .loader > li:nth-child(2) {
+        animation: rotateCog 10s linear infinite;
+      }
+      @keyframes rotateCog {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      .loader.notStarted > li:not(:nth-child(2)) {
+        opacity: 0;
+      }
+      .loader.notStarted {
+        transform: translateX(86%) scale(3);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/babel">
+      const { useState, useEffect } = React;
+      function Loader() {
+        const [startLoading, setStartLoading] = useState(false);
+        useEffect(() => {
+          setTimeout(() => {
+            setStartLoading(true);
+          }, 2000);
+        }, []);
+        return (
+          <ul
+            className={`loader ${startLoading === false ? "notStarted" : ""}`}
+          >
+            <li>L</li>
+            <li>
+              <ul className="cog">
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+              </ul>
+            </li>
+            <li>A</li>
+            <li>D</li>
+            <li>I</li>
+            <li>N</li>
+            <li>G</li>
+          </ul>
+        );
+      }
+      function App() {
+        return (
+          <main>
+            <Loader />
+          </main>
+        );
+      }
+      ReactDOM.render(<App />, document.getElementById("root"));
+    </script>
+  </body>
+</html>

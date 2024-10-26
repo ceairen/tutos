@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Form</title>
+    <script
+      src="https://unpkg.com/react@17/umd/react.development.js"
+      crossorigin
+    ></script>
+    <script
+      src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"
+      crossorigin
+    ></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap");
+      * {
+        box-sizing: border-box;
+        font-family: "Quicksand", sans-serif;
+      }
+      @keyframes scaleX {
+        from {
+          opacity: 0;
+          transform: translateX(-50px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+      @keyframes scaleXReverse {
+        from {
+          opacity: 0;
+          transform: translateX(50px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+      h2 {
+        margin: 0;
+      }
+      button {
+        outline: none;
+        border: none;
+      }
+      body {
+        --main-color: #4f38b3;
+        --seconday-color: #fff;
+        --main-gradient: linear-gradient(90deg, #35c4ff 0%, #b24eff 100%);
+        margin: 0;
+        padding: 0;
+        background-color: var(--main-color);
+        color: black;
+      }
+      main {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+      }
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .formContainer {
+        --form-container-margin: 150px;
+        background-color: var(--seconday-color);
+        padding: 60px 30px;
+        border-radius: 10px;
+        width: 370px;
+        position: relative;
+        margin-right: var(--form-container-margin);
+      }
+      .formContainer::after {
+        --v-margin: 50px;
+        --a-width: 250px;
+        width: var(--a-width);
+        content: "";
+        position: absolute;
+        top: calc(0px - var(--v-margin));
+        bottom: calc(0px - var(--v-margin));
+        background-color: #7a5ff0;
+        left: calc((50% - var(--a-width) / 2) + var(--form-container-margin));
+        z-index: -1;
+        border-radius: 10px;
+        animation: scaleX 0.3s 0.3s linear forwards;
+      }
+      .formContent {
+        animation: scaleXReverse 0.3s 0.3s linear forwards;
+      }
+      .formgroup {
+        display: flex;
+        flex-direction: column;
+        margin: 15px 0;
+      }
+      .formgroup > label {
+        font-weight: bold;
+        font-size: 0.8em;
+        color: rgb(186, 186, 186);
+        margin-bottom: 5px;
+      }
+      .formgroup > input {
+        padding: 8px;
+        border: 1px solid #e2e9f0;
+      }
+      form {
+        margin: 30px 0;
+      }
+      form button {
+        background-color: #7a5ff0;
+        font-weight: bold;
+        color: white;
+        border-radius: 100px;
+        padding: 8px 20px;
+      }
+      .formBottom {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        font-size: 0.8em;
+      }
+      .formBottom > a {
+        color: black;
+        margin-top: 15px;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/babel">
+      function FormGroup({ children }) {
+        return <div className="formgroup">{children}</div>;
+      }
+      function Form() {
+        return (
+          <div className="formContainer">
+            <div className="formContent">
+              <h2>Sign In</h2>
+              <form>
+                <FormGroup>
+                  <label>Username</label>
+                  <input type="text" />
+                </FormGroup>
+                <FormGroup>
+                  <label>Password</label>
+                  <input type="password" />
+                </FormGroup>
+                <button>Sign In</button>
+              </form>
+              <div className="formBottom">
+                <label>Don't have an account ?</label>
+                <a href="#">Sign Up</a>
+              </div>
+            </div>
+          </div>
+        );
+      }
+      function App() {
+        return (
+          <main>
+            <Form />
+            <p style={{ transform: "translateY(80px)" }}>
+              https://dribbble.com/shots/21338032-SIGN-IN-FORM
+            </p>
+          </main>
+        );
+      }
+      ReactDOM.render(<App />, document.getElementById("root"));
+    </script>
+  </body>
+</html>

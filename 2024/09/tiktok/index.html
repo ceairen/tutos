@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tiktok</title>
+    <script
+      src="https://unpkg.com/react@17/umd/react.development.js"
+      crossorigin
+    ></script>
+    <script
+      src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"
+      crossorigin
+    ></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+      * {
+        box-sizing: border-box;
+        font-family: "Quicksand", sans-serif;
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: #0d0d0c;
+        color: white;
+      }
+      main {
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .tiktok {
+        position: relative;
+      }
+      .tiktok > li {
+        --t-color: white;
+        --li-width: 12px;
+        --li-height: 45px;
+        --li-translate: 4px;
+        width: var(--li-width);
+        height: var(--li-height);
+        background-color: var(--t-color);
+        position: relative;
+      }
+      .tiktok > li::before,
+      .tiktok > li::after {
+        --e-size: 20px;
+        content: "";
+        position: absolute;
+        border: var(--li-width) solid var(--t-color);
+        width: var(--e-size);
+        height: var(--e-size);
+        border-radius: 50%;
+      }
+      .tiktok > li::before {
+        top: calc(0px - var(--e-size) - var(--li-width));
+        left: 0px;
+        border-top-color: transparent;
+        border-right-color: transparent;
+        border-left-color: transparent;
+        transform: translateY(var(--li-width)) rotate(45deg);
+      }
+      .tiktok > li::after {
+        bottom: calc(0px - var(--e-size) - var(--li-width));
+        right: 0px;
+        border-right-color: transparent;
+        transform: translateY(calc(0px - var(--li-width))) rotate(-45deg);
+      }
+      .tiktok > li:nth-child(1),
+      .tiktok > li:nth-child(3) {
+        position: absolute;
+        top: 0;
+        opacity: 0.8;
+      }
+      .tiktok > li:nth-child(1) {
+        --t-color: #3cbfdb;
+        transform: translateX(calc(0px - var(--li-translate)))
+          translateY(calc(0px - var(--li-translate)));
+      }
+      .tiktok > li:nth-child(3) {
+        --t-color: #e12e61;
+        transform: translateX(var(--li-translate))
+          translateY(var(--li-translate));
+      }
+      .tiktok > li:nth-child(2) {
+        z-index: 1;
+      }
+      .ComeOnText {
+        font-size: 3.7em;
+        font-family: "Poppins", sans-serif;
+        font-weight: 600;
+        font-style: normal;
+        position: relative;
+        transform: scaleX(0);
+        transform-origin: left;
+      }
+
+      .ComeOnText.visible {
+        transform: scaleX(1);
+      }
+
+      .ComeOnText,
+      .ComeOnText > li {
+        transition: all ease-in-out 0.4s;
+      }
+
+      .ComeOnText > li:first-child {
+        transition-delay: 0.4s;
+      }
+
+      .ComeOnText > li:last-child {
+        transition: all 0.5s 1s;
+      }
+
+      .ComeOnText.hidden > li:first-child {
+        transform: translateY(15px);
+        opacity: 0;
+      }
+      .ComeOnText > li:last-child {
+        position: absolute;
+        bottom: 0px;
+        left: 0;
+        height: 8px;
+        width: 100%;
+        border-radius: 50px;
+        background: linear-gradient(90deg, #3cbfdb 22%, #e12e61 78%);
+        transform-origin: right;
+      }
+
+      .ComeOnText.visible > li:last-child {
+        transform: scaleX(0);
+      }
+
+      .glitchText {
+        color: white;
+        position: relative;
+        animation: glitch-animation 3s infinite;
+      }
+      .glitchText::before,
+      .glitchText::after {
+        content: attr(data-text);
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: transparent;
+        clip: rect(0, 900px, 0, 0);
+      }
+
+      .glitchText::before {
+        left: 2px;
+        text-shadow: -2px 0 #3cbfdb;
+        animation: glitch-animation-before 4s infinite linear alternate-reverse;
+      }
+
+      .glitchText::after {
+        left: -2px;
+        text-shadow: -2px 0 #e12e61;
+        animation: glitch-animation-after 4s infinite linear alternate-reverse;
+      }
+      @keyframes glitch-animation {
+        0% {
+          transform: translate(0) scaleX(0.95);
+        }
+        10% {
+          transform: translate(-2px, 2px) scaleX(1.05);
+        }
+        20% {
+          transform: translate(-2px, -2px) scaleX(1);
+        }
+        30% {
+          transform: translate(2px, 2px) scaleX(0.95);
+        }
+        40% {
+          transform: translate(2px, -2px) scaleX(1.05);
+        }
+        50% {
+          transform: translate(0) scaleX(1);
+        }
+      }
+      @keyframes glitch-animation-before {
+        0% {
+          clip: rect(0, 900px, 0, 0);
+          transform: skew(0.5deg);
+        }
+        20% {
+          clip: rect(10px, 900px, 20px, 0);
+          transform: skew(1deg);
+        }
+        40% {
+          clip: rect(30px, 900px, 40px, 0);
+          transform: skew(-1deg);
+        }
+        60% {
+          clip: rect(50px, 900px, 60px, 0);
+          transform: skew(-0.5deg);
+        }
+        80% {
+          clip: rect(70px, 900px, 80px, 0);
+          transform: skew(0.5deg);
+        }
+        100% {
+          clip: rect(0, 900px, 0, 0);
+          transform: skew(0deg);
+        }
+      }
+
+      @keyframes glitch-animation-after {
+        0% {
+          clip: rect(0, 900px, 0, 0);
+          transform: skew(-0.5deg);
+        }
+        20% {
+          clip: rect(60px, 900px, 70px, 0);
+          transform: skew(-1deg);
+        }
+        40% {
+          clip: rect(20px, 900px, 30px, 0);
+          transform: skew(1deg);
+        }
+        60% {
+          clip: rect(40px, 900px, 50px, 0);
+          transform: skew(0.5deg);
+        }
+        80% {
+          clip: rect(10px, 900px, 20px, 0);
+          transform: skew(-0.5deg);
+        }
+        100% {
+          clip: rect(0, 900px, 0, 0);
+          transform: skew(0deg);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/babel">
+      const { useState, useEffect } = React;
+      function TiktokLogo() {
+        return (
+          <ul className="tiktok">
+            <li></li>
+            <li></li>
+            <li></li>
+          </ul>
+        );
+      }
+
+      function ComeOnText({ text }) {
+        const [visible, setVisible] = useState(false);
+
+        useEffect(() => {
+          setVisible(true);
+        }, []);
+
+        return (
+          <ul className={`ComeOnText ${visible ? "visible" : "hidden"}`}>
+            <li>
+              <GlitchText text={text} />
+            </li>
+            <li></li>
+          </ul>
+        );
+      }
+
+      function GlitchText({ text }) {
+        return (
+          <div data-text={text} className="glitchText">
+            {text}
+          </div>
+        );
+      }
+
+      function App() {
+        return (
+          <main>
+            <ul style={{ display: "flex" }}>
+              <li>
+                <TiktokLogo />
+              </li>
+              <li style={{ marginLeft: 40 }}>
+                <ComeOnText text={"TikTok"} />
+              </li>
+            </ul>
+          </main>
+        );
+      }
+      ReactDOM.render(<App />, document.getElementById("root"));
+    </script>
+  </body>
+</html>

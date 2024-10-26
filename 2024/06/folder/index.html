@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pricing</title>
+    <script
+      src="https://unpkg.com/react@17/umd/react.development.js"
+      crossorigin
+    ></script>
+    <script
+      src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"
+      crossorigin
+    ></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap");
+      * {
+        box-sizing: border-box;
+        font-family: "Quicksand", sans-serif;
+      }
+      :root {
+        --folder-size: 120px;
+        --folder-size-open: 400px;
+        --folder-color: #2b2d33;
+        --folder-color-open: #191919;
+        --folder-radius: 8px;
+        --folder-shadow: 3px 5px 5px 0px rgb(37 37 37 / 75%);
+        --folder-button-size: 15px;
+      }
+      body {
+        --main-color: #9a6bbe;
+        margin: 0;
+        padding: 0;
+        background-color: var(--main-color);
+        color: white;
+      }
+      button {
+        outline: none;
+        border: none;
+      }
+      main {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .folder {
+        width: var(--folder-size);
+        height: calc(var(--folder-size) * 0.6);
+        background-color: var(--folder-color);
+        border-radius: var(--folder-radius);
+        position: relative;
+        border-top-left-radius: 0;
+        cursor: pointer;
+        transition: width 0.3s 0.3s, height 0.3s 0.3s;
+      }
+
+      .folder,
+      .folder::before {
+        box-shadow: var(--folder-shadow);
+      }
+
+      .folder::before,
+      .folder::after {
+        position: absolute;
+        content: "";
+        background-color: var(--folder-color);
+      }
+
+      .folder::before {
+        width: calc(var(--folder-size) / 3);
+        height: calc(var(--folder-size) / 10);
+        top: calc(0px - (var(--folder-size) / 10 / 1.5));
+        border-top-left-radius: var(--folder-radius);
+        border-top-right-radius: var(--folder-radius);
+        z-index: -1;
+        transition: width 0.3s 0.3s, height 0.3s 0.3s, top 0.3s 0.3s;
+      }
+      .folder::after {
+        background-color: #191919;
+        width: 100%;
+        height: 100%;
+        border-radius: var(--folder-radius);
+        transform-origin: bottom right;
+        transition: transform 0.3s;
+      }
+
+      .folder:hover::after {
+        transform: skew(-10deg) scaleY(0.85);
+      }
+
+      .folder.open {
+        width: var(--folder-size-open);
+        height: calc(var(--folder-size-open) * 0.6);
+        background-color: var(--folder-color-open);
+        cursor: default;
+        border-top-left-radius: 0px;
+        border-top-right-radius: 0px;
+      }
+      .folder.open > .file {
+        position: relative;
+        width: 45px;
+        height: 60px;
+        display: inline-block;
+        margin: 15px 0 0 15px;
+        animation: 0.5s linear 0.7s forwards comeon;
+        border-radius: 3px;
+        cursor: pointer;
+      }
+
+      .folder.open > .file::after {
+        content: "";
+        position: absolute;
+        background-color: var(--folder-color-open);
+        top: -7px;
+        right: -7px;
+        width: 14px;
+        height: 14px;
+        transform: rotate(45deg);
+      }
+
+      .folder.open > .file::before {
+        content: "";
+        position: absolute;
+        background-color: #5a5a5a;
+        top: 0;
+        right: 0;
+        width: 12px;
+        height: 12px;
+      }
+      .folder.open::after {
+        opacity: 0;
+        transform: skew(0deg) scaleY(0);
+      }
+
+      .folder.open::before {
+        width: 100%;
+        background-color: #2b2d33;
+        height: 30px;
+        top: -30px;
+      }
+
+      .file {
+        width: 100%;
+        height: 100%;
+        background-color: white;
+        position: absolute;
+        border-radius: var(--folder-radius);
+        transform: scaleX(0.95) scaleY(0.8);
+        transform-origin: bottom;
+        transition: transform 0.3s;
+        opacity: 0;
+      }
+
+      .folder:not(.open):hover > .file {
+        transform: scaleX(0.95) scaleY(0.95);
+        opacity: 1;
+      }
+      button {
+        border-radius: 50%;
+        width: var(--folder-button-size);
+        height: var(--folder-button-size);
+        top: calc(-7px - var(--folder-button-size));
+        animation: 0.3s linear 0.5s forwards comeon;
+        position: absolute;
+      }
+
+      .folder-delete-button {
+        left: 10px;
+        background-color: #f44336;
+      }
+
+      @keyframes comeon {
+        0% {
+          transform: translateX(-30px);
+        }
+        100% {
+          transform: translateX(0px);
+          opacity: 1;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/babel">
+      const { useEffect, useState } = React;
+      function Folder({ nbFiles }) {
+        const [open, setOpen] = useState(false);
+        function handleOpenFolder(e) {
+          if (open) return;
+          const { target } = e;
+          setOpen(true);
+        }
+        return (
+          <ul
+            className={`folder ${open ? "open" : ""}`}
+            onClick={handleOpenFolder}
+          >
+            {new Array(nbFiles).fill(null).map((v, i) => {
+              return (
+                <li
+                  key={i}
+                  style={{ animationDelay: `${0.5 + (i + 1) / 10}s` }}
+                  className="file"
+                ></li>
+              );
+            })}
+            {open && (
+              <button
+                className="folder-delete-button"
+                style={{ opacity: 0 }}
+                onClick={() => setOpen(false)}
+              ></button>
+            )}
+          </ul>
+        );
+      }
+      function App() {
+        return (
+          <main>
+            <Folder nbFiles={4} />
+          </main>
+        );
+      }
+      ReactDOM.render(<App />, document.getElementById("root"));
+    </script>
+  </body>
+</html>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pricing</title>
+    <script
+      src="https://unpkg.com/react@17/umd/react.development.js"
+      crossorigin
+    ></script>
+    <script
+      src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"
+      crossorigin
+    ></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap");
+      * {
+        box-sizing: border-box;
+        font-family: "Quicksand", sans-serif;
+      }
+      body {
+        --main-color: #24262e;
+        --seconday-color: #1c1c1c;
+        --main-gradient: linear-gradient(90deg, #35c4ff 0%, #b24eff 100%);
+        margin: 0;
+        padding: 0;
+        background-color: var(--main-color);
+        color: white;
+      }
+      main {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .Burger {
+        --burger-line-size: 3px;
+        --burger-size: 65px;
+        --burger-color: white;
+        width: var(--burger-size);
+        height: var(--burger-size);
+        position: relative;
+        display: flex;
+        justify-content: space-around;
+        flex-direction: column;
+        cursor: pointer;
+      }
+      .Burger > li {
+        position: absolute;
+        width: 100%;
+        border-radius: var(--burger-line-size);
+      }
+      .Burger > li:nth-child(1) {
+        height: var(--burger-line-size);
+        border: none;
+        background-color: var(--burger-color);
+        transition: height 0.3s linear, background-color 0.3s;
+      }
+      .Burger > li:nth-child(2),
+      .Burger > li:nth-child(3) {
+        width: 100%;
+        height: var(--burger-line-size);
+        background-color: var(--burger-color);
+      }
+      .Burger > li:nth-child(2) {
+        transform: translateY(
+          calc(0px + var(--burger-line-size) - var(--burger-size) / 2)
+        );
+        transition: transform 0.3s cubic-bezier(0.445, 0.05, 0.55, 0.95);
+      }
+      .Burger > li:nth-child(3) {
+        transform: translateY(
+          calc((var(--burger-size) / 2) - var(--burger-line-size))
+        );
+        transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      }
+      .Burger.open > li:nth-child(1) {
+        height: 100%;
+        border-radius: 50%;
+        border: var(--burger-line-size) solid var(--burger-color);
+        background-color: transparent;
+        transition: height 0.3s cubic-bezier(0.175, 0.885, 0.32, 2.275);
+      }
+      .Burger.open > li:nth-child(2) {
+        transform: translateY(0) rotateZ(45deg) scaleX(0.6);
+      }
+      .Burger.open > li:nth-child(3) {
+        transform: translateY(0) rotateZ(-45deg) scaleX(0.6);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/babel">
+      function App() {
+        function Burger() {
+          const [open, setOpen] = React.useState(false);
+
+          return (
+            <ul
+              onClick={() => setOpen((open) => !open)}
+              className={`Burger ${open ? "open" : ""}`}
+            >
+              <li></li>
+              <li></li>
+              <li></li>
+            </ul>
+          );
+        }
+        return (
+          <main>
+            <Burger />
+          </main>
+        );
+      }
+      ReactDOM.render(<App />, document.getElementById("root"));
+    </script>
+  </body>
+</html>

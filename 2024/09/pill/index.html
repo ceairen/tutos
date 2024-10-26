@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pill</title>
+    <script
+      src="https://unpkg.com/react@17/umd/react.development.js"
+      crossorigin
+    ></script>
+    <script
+      src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"
+      crossorigin
+    ></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap");
+      * {
+        box-sizing: border-box;
+        font-family: "Quicksand", sans-serif;
+      }
+      body {
+        --main-color: #bfd0cd;
+        --seconday-color: #090808;
+        --main-gradient: linear-gradient(90deg, #35c4ff 0%, #b24eff 100%);
+        margin: 0;
+        padding: 0;
+        background-color: var(--main-color);
+        color: white;
+      }
+      main {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/babel">
+      function App() {
+        function PillBottom() {
+          return (
+            <ul
+              style={{
+                display: "flex",
+                height: "100%",
+                overflow: "auto",
+                transform: "scale(.94)",
+              }}
+            >
+              <li
+                style={{
+                  flexGrow: 1,
+                  backgroundColor: "#FF6A56",
+                  borderBottomLeftRadius: 120,
+                }}
+              ></li>
+              <li
+                style={{
+                  flexGrow: 1,
+                  backgroundColor: "#FDA11E",
+                  borderBottomRightRadius: 120,
+                }}
+              ></li>
+            </ul>
+          );
+        }
+        function PillTop() {
+          function PillTopCheeks() {
+            function PillTopCheek() {
+              const cheekSize = 10;
+              return (
+                <li
+                  style={{
+                    backgroundColor: "#FF786B",
+                    width: cheekSize * 2.2,
+                    height: cheekSize,
+                    borderRadius: "100%",
+                  }}
+                ></li>
+              );
+            }
+            return (
+              <ul
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  width: "100%",
+                  margin: "auto",
+                  transform: "translateY(-20px)",
+                }}
+              >
+                <PillTopCheek />
+                <PillTopCheek />
+              </ul>
+            );
+          }
+          function PillTopMouth() {
+            const mouthSize = 25;
+            return (
+              <li
+                style={{
+                  width: mouthSize,
+                  height: mouthSize,
+                  border: "4px solid #60242B",
+                  borderRadius: "50%",
+                  borderTopColor: "transparent",
+                  borderRightColor: "transparent",
+                  transform: "rotate(-45deg)",
+                  margin: 10,
+                }}
+              ></li>
+            );
+          }
+          function PillTopEyes() {
+            function PillTopEye() {
+              const eyeSize = 20;
+              const pupilleSize = eyeSize / 2;
+              return (
+                <li
+                  style={{
+                    width: eyeSize,
+                    height: eyeSize * 1.2,
+                    backgroundColor: "#60242B",
+                    borderRadius: "50%",
+                  }}
+                >
+                  <ul>
+                    <li
+                      style={{
+                        width: pupilleSize,
+                        height: pupilleSize * 1.1,
+                        backgroundColor: "white",
+                        borderRadius: "50%",
+                        margin: "15% auto",
+                      }}
+                    ></li>
+                  </ul>
+                </li>
+              );
+            }
+            return (
+              <ul style={{ display: "flex", justifyContent: "space-around" }}>
+                <PillTopEye />
+                <PillTopMouth />
+                <PillTopEye />
+              </ul>
+            );
+          }
+
+          return (
+            <ul
+              style={{
+                width: "100%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                transform: "translateY(10px)",
+              }}
+            >
+              <li>
+                <ul>
+                  <li>
+                    <PillTopEyes />
+                  </li>
+                  <li>
+                    <PillTopCheeks />
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          );
+        }
+        function Pill() {
+          const pillWidth = 160;
+          const pillBorder = "6px solid #6A2729";
+          const pillChildStyle = {
+            height: "50%",
+            position: "relative",
+          };
+          return (
+            <ul
+              style={{
+                height: pillWidth * 1.7,
+                width: pillWidth,
+                border: pillBorder,
+                borderRadius: pillWidth,
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
+              <li
+                style={{
+                  ...pillChildStyle,
+                  border: "5px solid white",
+                  borderTopLeftRadius: pillWidth,
+                  borderTopRightRadius: pillWidth,
+                  backgroundColor: "#F1F1E8",
+                  borderBottomColor: "transparent",
+                  display: "flex",
+                  flexGrow: 1,
+                  overflow: "hidden",
+                }}
+              >
+                <PillTop />
+              </li>
+              <li style={{ ...pillChildStyle, borderTop: pillBorder }}>
+                <PillBottom />
+              </li>
+            </ul>
+          );
+        }
+        return (
+          <main>
+            <Pill />
+          </main>
+        );
+      }
+      ReactDOM.render(<App />, document.getElementById("root"));
+    </script>
+  </body>
+</html>
